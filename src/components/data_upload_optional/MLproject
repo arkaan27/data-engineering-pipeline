@@ -19,10 +19,10 @@ entry_points:
         description: Artifact for data storage
         type: string
 
-      directory_path:
-        description: the url of the directory to download
+      bucket_path:
+        description: the url of the bucket
         type: uri
-        default: https://github.com/arkaan27/data-engineering-pipeline.git#data
+        default: s3://data-engineering-pipeline/FHIR-data
 
     command: >-
-        python run.py --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --directory_path {directory_path}
+        python run.py --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --bucket_path {bucket_path}

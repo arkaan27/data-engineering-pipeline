@@ -6,6 +6,7 @@ Date: 03/03/2022
 
 """
 import os.path
+import os
 
 
 def basic_function(parameter1):
@@ -19,4 +20,3 @@ def basic_function(parameter1):
 
 if __name__ == "__main__":
     basic_function("hello")
-

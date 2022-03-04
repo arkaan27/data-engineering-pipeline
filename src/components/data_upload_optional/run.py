@@ -13,6 +13,7 @@ import wandb
 import argparse
 from botocore.exceptions import ClientError
 
+
 # Basic Logging
 logging.basicConfig(
     filename='logs/data_upload_results.log',
@@ -21,14 +22,13 @@ logging.basicConfig(
     format='%(name)s - %(levelname)s - %(message)s'
 )
 
-# Creating Session With Boto3.
-session = boto3.Session(
-    aws_access_key_id='<your_access_key_id>',
-    aws_secret_access_key='<your_secret_access_key>'
-)
-
 # Creating S3 Resource From the Session.
-s3 = session.resource('s3')
+s3 = boto3.resource(
+    service_name='s3',
+    region_name='eu-west-2',
+    aws_access_key_id= os.environ['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key= os.environ['AWS_SECRET_ACCESS_KEY']
+)
 
 
 def bucket_exists(bucket_name):
@@ -79,7 +79,10 @@ def upload_directory(path, bucket_name):
 
 def go(args):
     # Creating a WandB run for automating pipeline
-    run = wandb.init(project="data-engineering", group="dev", job_type="data_upload")
+    run = wandb.init(project="data-engineering",
+                     group="dev",
+                     job_type="data_upload",
+                     )
     run.config.update(args)
 
     # Creating artifact
@@ -89,8 +92,8 @@ def go(args):
         description=args.output_description,
     )
 
-    # Adding directory to the WandB
-    artifact.add_dir(args.directory_path)
+    # Adding the S3 directory to the artifact
+    artifact.add_reference('s3://data-engineering-pipeline/FHIR-data')
 
     # Logging artifact
     logging.info("Logging the artifact")
@@ -98,7 +101,14 @@ def go(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="A very basic data cleaning")
+    parser = argparse.ArgumentParser(description="Data upload process to Weights & Biases")
+
+    parser.add_argument(
+        "--bucket_path",
+        type=str,
+        help="Bucket path to upload data to Weights & Biases",
+        required=True,
+    )
 
     parser.add_argument(
         "--output_artifact",
@@ -118,13 +128,6 @@ if __name__ == "__main__":
         "--output_description",
         type=str,
         help="Description for the artifact",
-        required=True,
-    )
-
-    parser.add_argument(
-        "--directory_path",
-        type=str,
-        help="Directory file path to upload",
         required=True,
     )
 

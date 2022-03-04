@@ -8,16 +8,16 @@ entry_points:
       input_artifact:
         description: Fully qualified name for the artifact
         type: string
-        default: xx
+        default: data_upload
 
       output_artifact:
         description: Name for the W&B artifact that will be created
         type: string
-        default: xx
+        default: tabular_data
 
       output_type:
         description: Type of the artifact to create
-        type: string
+        type: table
 
       output_description:
         description: Artifact after processing the data
