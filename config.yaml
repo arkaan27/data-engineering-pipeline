@@ -1,0 +1,17 @@
+main:
+  components_repository: "https://github.com/arkaan27/data-engineering-pipeline.git#src#components"
+  # All the intermediate files will be copied to this directory at the end of the run.
+  # Set this to null if you are running in prod
+  project_name: data-engineering-pipeline
+  experiment_name: development
+  steps: all
+data_upload_optional:
+  # The path towards your dataset to be uploaded
+
+  path: "D:/data-engineering-pipeline/data"
+
+  # The bucket name for the file to be uploaded
+  bucket_name: " "
+
+data_processing:
+
