@@ -79,13 +79,17 @@ def upload_directory(path, bucket_name):
 
 def go(args):
     # Creating a WandB run for automating pipeline
+    logging.info("Creating the Weights and biases Run")
     run = wandb.init(project="data-engineering",
                      group="dev",
                      job_type="data_upload",
                      )
+    #  Updating parameters of the run from the arguments taken
+    logging.info("Updating the parameters of the run")
     run.config.update(args)
 
     # Creating artifact
+    logging.info("Creating Artifact")
     artifact = wandb.Artifact(
         args.output_artifact,
         type=args.output_type,
@@ -93,6 +97,7 @@ def go(args):
     )
 
     # Adding the S3 directory to the artifact
+    logging.info("Adding S3 Bucket as reference")
     artifact.add_reference('s3://data-engineering-pipeline/FHIR-data')
 
     # Logging artifact
