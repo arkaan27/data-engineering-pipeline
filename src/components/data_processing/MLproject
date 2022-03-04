@@ -1,0 +1,29 @@
+name: data_processing
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      input_artifact:
+        description: Fully qualified name for the artifact
+        type: string
+        default: xx
+
+      output_artifact:
+        description: Name for the W&B artifact that will be created
+        type: string
+        default: xx
+
+      output_type:
+        description: Type of the artifact to create
+        type: string
+
+      output_description:
+        description: Artifact after processing the data
+        type: string
+        default: Processing the data by converting Json file to tabular format
+
+
+    command: >-
+        python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}
