@@ -9,6 +9,8 @@ Date: 04/03/2022
 import os
 import logging
 import boto3
+import wandb
+import argparse
 from botocore.exceptions import ClientError
 
 # Basic Logging
@@ -65,6 +67,7 @@ def upload_directory(path, bucket_name):
     else:
         logging.error("ERROR: File path does not exist!")
 
+    # Uploading the files to S3 bucket
     try:
         for root, dirs, files in os.walk(path):
             for file in files:
@@ -72,3 +75,59 @@ def upload_directory(path, bucket_name):
         logging.info("SUCCESS: Files Uploaded Successfully")
     except:
         logging.error("ERROR: Files could not be uploaded, check s3 bucket")
+
+
+def go(args):
+    # Creating a WandB run for automating pipeline
+    run = wandb.init(project="data-engineering", group="dev", job_type="data_upload")
+    run.config.update(args)
+
+    # Creating artifact
+    artifact = wandb.Artifact(
+        args.output_artifact,
+        type=args.output_type,
+        description=args.output_description,
+    )
+
+    # Adding directory to the WandB
+    artifact.add_dir(args.directory_path)
+
+    # Logging artifact
+    logging.info("Logging the artifact")
+    run.log_artifact(artifact)
+
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="A very basic data cleaning")
+
+    parser.add_argument(
+        "--output_artifact",
+        type=str,
+        help="Name of the artifact name to be outputted",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--output_type",
+        type=str,
+        help="Type of artifact to be outputted",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--output_description",
+        type=str,
+        help="Description for the artifact",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--directory_path",
+        type=str,
+        help="Directory file path to upload",
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    go(args)
