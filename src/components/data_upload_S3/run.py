@@ -1,6 +1,8 @@
 """
 Upload data to S3 Bucket
 
+Make sure the environment variables consists of
+
 Author: Arkaan Quanunga
 Date: 04/03/2022
 """
@@ -8,14 +10,11 @@ import os
 import logging
 import boto3
 from botocore.exceptions import ClientError
-
-
-
-
+import argparse
 
 # Basic Logging
 logging.basicConfig(
-    filename='logs/data_upload_results.log',
+    filename='logs/data_upload_S3_results.log',
     level=logging.INFO,
     filemode='w',
     format='%(name)s - %(levelname)s - %(message)s'
@@ -25,8 +24,8 @@ logging.basicConfig(
 s3 = boto3.resource(
     service_name='s3',
     region_name='eu-west-2',
-    aws_access_key_id= os.environ['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key= os.environ['AWS_SECRET_ACCESS_KEY']
+    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
 )
 
 
@@ -75,3 +74,28 @@ def upload_directory(path, bucket_name):
     except:
         logging.error("ERROR: Files could not be uploaded, check s3 bucket")
 
+
+def go(args):
+    bucket_exists(args.bucket_name)
+    upload_directory(args.dataset_path, args.bucket_name)
+
+if __name__ == "__main__":
+    parser = argparse.ArgumentParser(description="Data upload process to S3")
+
+    parser.add_argument(
+        "--bucket_name",
+        type=str,
+        help="Bucket name to upload data",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--dataset_path",
+        type=str,
+        help="The directory path to upload data from",
+        required=True,
+    )
+
+    args = parser.parse_args()
+
+    go(args)
