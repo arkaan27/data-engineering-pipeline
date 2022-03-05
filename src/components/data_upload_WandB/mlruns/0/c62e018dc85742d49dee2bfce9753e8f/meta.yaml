@@ -1,4 +1,4 @@
-artifact_uri: file:///mnt/d/data-engineering-pipeline/src/components/data_upload_optional/mlruns/0/c62e018dc85742d49dee2bfce9753e8f/artifacts
+artifact_uri: file:///mnt/d/data-engineering-pipeline/src/components/data_upload_WandB/mlruns/0/c62e018dc85742d49dee2bfce9753e8f/artifacts
 end_time: 1646434896680
 entry_point_name: ''
 experiment_id: '0'

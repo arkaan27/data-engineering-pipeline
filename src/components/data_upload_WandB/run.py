@@ -21,6 +21,14 @@ import argparse
 from botocore.exceptions import ClientError
 
 
+# Basic Logging
+logging.basicConfig(
+    filename='logs/data_upload_results.log',
+    level=logging.INFO,
+    filemode='w',
+    format='%(name)s - %(levelname)s - %(message)s'
+)
+
 def go(args):
     # Creating a WandB run for automating pipeline
     logging.info("Creating the Weights and biases Run")
