@@ -1,0 +1,28 @@
+name: uploading_data
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+
+      output_artifact:
+        description: Name for the W&B artifact that will be created
+        type: string
+        default: raw_data
+
+      output_type:
+        description: Type of the artifact to create
+        type: string
+        default: data_upload
+
+      output_description:
+        description: Artifact for data storage
+        type: string
+
+      bucket_path:
+        description: the url of the bucket
+        type: uri
+        default: s3://data-engineering-pipeline/FHIR-data
+
+    command: >-
+        python run.py --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}  --bucket_path {bucket_path}
