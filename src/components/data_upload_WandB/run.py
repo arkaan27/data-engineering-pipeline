@@ -1,5 +1,12 @@
 """
-Upload data files to S3 bucket
+Sync data files from S3 to Weights & Biases
+
+Make sure to add:
+
+1. AWS_ACCESS_KEY_ID
+2. AWS_SECRET_ACCESS_KEY
+
+to your environment Variables, see README.md of this component for more details
 
 Author: Arkaan Quanunga
 Date: 04/03/2022
@@ -12,69 +19,6 @@ import boto3
 import wandb
 import argparse
 from botocore.exceptions import ClientError
-
-
-# Basic Logging
-logging.basicConfig(
-    filename='logs/data_upload_results.log',
-    level=logging.INFO,
-    filemode='w',
-    format='%(name)s - %(levelname)s - %(message)s'
-)
-
-# Creating S3 Resource From the Session.
-s3 = boto3.resource(
-    service_name='s3',
-    region_name='eu-west-2',
-    aws_access_key_id= os.environ['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key= os.environ['AWS_SECRET_ACCESS_KEY']
-)
-
-
-def bucket_exists(bucket_name):
-    # Logging the bucketname for reference
-    logging.info("Bucket name: {}".format(bucket_name))
-
-    # Making sure bucket_name is a string
-    try:
-        assert isinstance(bucket_name, str)
-    except AssertionError:
-        logging.error("ERROR: Bucket name is not a string value")
-
-    # Making sure bucket name exists on s3
-
-    try:
-        s3.meta.client.head_bucket(Bucket=bucket_name)
-    except ClientError:
-        logging.error("ERROR: Bucket name does not exist")
-
-
-def upload_directory(path, bucket_name):
-    # Asserting the path & bucket_name to be string
-    try:
-        assert isinstance(path, str)
-    except AssertionError:
-        logging.error("ERROR: File path is not a string type")
-
-    try:
-        assert isinstance(bucket_name, str)
-    except AssertionError:
-        logging.error("ERROR: Bucket name is not a string type")
-
-    # Checking if file path exists
-    if os.path.exists(path):
-        logging.info("SUCCESS: The file path specified exists!")
-    else:
-        logging.error("ERROR: File path does not exist!")
-
-    # Uploading the files to S3 bucket
-    try:
-        for root, dirs, files in os.walk(path):
-            for file in files:
-                s3.meta.client.upload_file(os.path.join(root, file), bucket_name, "FHIR-data/{}".format(file))
-        logging.info("SUCCESS: Files Uploaded Successfully")
-    except:
-        logging.error("ERROR: Files could not be uploaded, check s3 bucket")
 
 
 def go(args):
@@ -98,7 +42,7 @@ def go(args):
 
     # Adding the S3 directory to the artifact
     logging.info("Adding S3 Bucket as reference")
-    artifact.add_reference('s3://data-engineering-pipeline/FHIR-data')
+    artifact.add_reference(args.bucket_path)
 
     # Logging artifact
     logging.info("Logging the artifact")
