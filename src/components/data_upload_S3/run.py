@@ -79,6 +79,7 @@ def go(args):
     bucket_exists(args.bucket_name)
     upload_directory(args.dataset_path, args.bucket_name)
 
+
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Data upload process to S3")
 
