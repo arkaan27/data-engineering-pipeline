@@ -1,0 +1,24 @@
+{
+    "os": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+    "python": "3.9.10",
+    "heartbeatAt": "2022-03-06T21:46:03.640600",
+    "startedAt": "2022-03-06T21:45:27.490253",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "-f",
+        "/root/.local/share/jupyter/runtime/kernel-7d0e51b3-c82a-4cea-8a23-2429a8b1b866.json"
+    ],
+    "state": "running",
+    "program": "Weights&Biases with S3.ipynb",
+    "root": "/mnt/d/data-engineering-pipeline",
+    "git": {
+        "remote": "https://github.com/arkaan27/data-engineering-pipeline.git",
+        "commit": "22d5163e398ac019d5b9fbe30c07daf755646245"
+    },
+    "email": null,
+    "host": "DESKTOP-8F2FI2T",
+    "username": "root",
+    "executable": "/root/miniconda3/envs/mlflow-4a129f2cce0370b56da2b687e54356aae0dd4dd5/bin/python"
+}

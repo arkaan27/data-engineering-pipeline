@@ -1,0 +1,6 @@
+name: EDA
+conda_env: conda.yml
+
+entry_points:
+  main:
+    command: jupyter notebook --allow-root
