@@ -23,13 +23,6 @@ logging.basicConfig(
     format='%(name)s - %(levelname)s - %(message)s'
 )
 
-# Creating S3 Resource From the Session.
-s3 = boto3.resource(
-    service_name='s3',
-    region_name='eu-west-2',
-    aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-    aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY']
-)
 
 
 def bucket_exists(bucket_name):
@@ -46,7 +39,7 @@ def bucket_exists(bucket_name):
     # Making sure bucket name exists on s3
 
     try:
-        s3.meta.client.head_bucket(Bucket=bucket_name)
+        s3.meta.client.head_bucket(Bucket=args.bucket_name)
     except ClientError:
         logging.error("ERROR: Bucket name does not exist")
 
@@ -69,6 +62,15 @@ def upload_directory(path, bucket_name, prefix):
     else:
         logging.error("ERROR: File path does not exist!")
 
+    # Creating S3 Resource From the Session.
+    s3 = boto3.resource(
+        service_name='s3',
+        region_name=args.AWS_DEFAULT_REGION,
+        aws_access_key_id=args.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=args.AWS_SECRET_ACCESS_KEY,
+        aws_session_token= args.AWS_SESSION_TOKEN
+    )
+
     # Uploading the files to S3 bucket
     try:
         for root, dirs, files in os.walk(path):
@@ -81,7 +83,19 @@ def upload_directory(path, bucket_name, prefix):
 
 def go(args):
 
+    # Creating S3 Resource From the Session.
+    s3 = boto3.resource(
+        service_name='s3',
+        region_name=args.AWS_DEFAULT_REGION,
+        aws_access_key_id=args.AWS_ACCESS_KEY_ID,
+        aws_secret_access_key=args.AWS_SECRET_ACCESS_KEY,
+        aws_session_token=args.AWS_SESSION_TOKEN
+    )
+
+    # Checking if the bucket exists
     bucket_exists(args.bucket_name)
+
+    # Uploading directory to the bucket
     upload_directory(args.dataset_path, args.bucket_name, args.bucket_prefix)
 
 
@@ -89,16 +103,45 @@ if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Data upload process to S3")
 
     parser.add_argument(
-        "--bucket_prefix",
+        "--AWS_ACCESS_KEY_ID",
         type=str,
-        help="Bucket prefix to upload the data into it",
+        help="Your AWS ACCESS KEY ID for accessing the bucket",
         required=True,
     )
+
+    parser.add_argument(
+        "--AWS_SECRET_ACCESS_KEY",
+        type=str,
+        help="Your AWS SECRET ACCESS KEY for accessing the bucket",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--AWS_SESSION_TOKEN",
+        type=str,
+        help="Your AWS Session Token for accessing the bucket",
+        required=False,
+    )
+
+    parser.add_argument(
+        "--AWS_DEFAULT_REGION",
+        type=str,
+        help="Your AWS Default Region where the bucket is located",
+        required=True,
+    )
+
 
     parser.add_argument(
         "--bucket_name",
         type=str,
         help="Bucket name to upload data",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--bucket_prefix",
+        type=str,
+        help="Bucket prefix to upload the data into it",
         required=True,
     )
 
