@@ -3,6 +3,9 @@ Upload data to S3 Bucket
 
 Make sure the environment variables consists of
 
+1. AWS_ACCESS_KEY_ID
+2. AWS_SECRET_ACCESS_KEY
+
 Author: Arkaan Quanunga
 Date: 04/03/2022
 """
@@ -30,6 +33,7 @@ s3 = boto3.resource(
 
 
 def bucket_exists(bucket_name):
+
     # Logging the bucketname for reference
     logging.info("Bucket name: {}".format(bucket_name))
 
@@ -47,7 +51,7 @@ def bucket_exists(bucket_name):
         logging.error("ERROR: Bucket name does not exist")
 
 
-def upload_directory(path, bucket_name):
+def upload_directory(path, bucket_name, prefix):
     # Asserting the path & bucket_name to be string
     try:
         assert isinstance(path, str)
@@ -69,19 +73,27 @@ def upload_directory(path, bucket_name):
     try:
         for root, dirs, files in os.walk(path):
             for file in files:
-                s3.meta.client.upload_file(os.path.join(root, file), bucket_name, "FHIR-data/{}".format(file))
+                s3.meta.client.upload_file(os.path.join(root, file), bucket_name, "{}/{}".format(prefix, file))
         logging.info("SUCCESS: Files Uploaded Successfully")
     except:
         logging.error("ERROR: Files could not be uploaded, check s3 bucket")
 
 
 def go(args):
+
     bucket_exists(args.bucket_name)
-    upload_directory(args.dataset_path, args.bucket_name)
+    upload_directory(args.dataset_path, args.bucket_name, args.bucket_prefix)
 
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Data upload process to S3")
+
+    parser.add_argument(
+        "--bucket_prefix",
+        type=str,
+        help="Bucket prefix to upload the data into it",
+        required=True,
+    )
 
     parser.add_argument(
         "--bucket_name",
