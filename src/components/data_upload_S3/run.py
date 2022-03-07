@@ -30,7 +30,7 @@ logging.basicConfig(
 )
 
 
-def bucket_exists(bucket_name):
+def bucket_exists(s3, bucket_name):
     # Logging the bucketname for reference
     logging.info("Bucket name: {}".format(bucket_name))
 
@@ -48,7 +48,7 @@ def bucket_exists(bucket_name):
         logging.error("ERROR: Bucket name does not exist")
 
 
-def upload_directory(path, bucket_name, prefix):
+def upload_directory(s3, path, bucket_name, prefix):
     # Asserting the path & bucket_name to be string
     try:
         assert isinstance(path, str)
@@ -87,10 +87,10 @@ def go(args):
     )
 
     # Checking if the bucket exists
-    bucket_exists(args.bucket_name)
+    bucket_exists(s3, args.bucket_name)
 
     # Uploading directory to the bucket
-    upload_directory(args.dataset_path, args.bucket_name, args.bucket_prefix)
+    upload_directory(s3, args.dataset_path, args.bucket_name, args.bucket_prefix)
 
 
 if __name__ == "__main__":
