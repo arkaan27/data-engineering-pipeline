@@ -43,7 +43,7 @@ def bucket_exists(s3, bucket_name):
     # Making sure bucket name exists on s3
 
     try:
-        s3.meta.client.head_bucket(Bucket=args.bucket_name)
+        s3.meta.client.head_bucket(Bucket=bucket_name)
     except ClientError:
         logging.error("ERROR: Bucket name does not exist")
 
@@ -77,20 +77,22 @@ def upload_directory(s3, path, bucket_name, prefix):
 
 
 def go(args):
+    # Defining crucial variables
+    os.environ['AWS_ACCESS_KEY_ID']=args.AWS_ACCESS_KEY_ID
+    os.environ['AWS_SECRET_ACCESS_KEY']= args.AWS_SECRET_ACCESS_KEY
     # Creating S3 Resource From the Session.
     s3 = boto3.resource(
         service_name='s3',
         region_name=args.AWS_DEFAULT_REGION,
-        aws_access_key_id=args.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=args.AWS_SECRET_ACCESS_KEY,
-        aws_session_token=args.AWS_SESSION_TOKEN
+        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
+        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
     )
 
     # Checking if the bucket exists
     bucket_exists(s3, args.bucket_name)
 
     # Uploading directory to the bucket
-    upload_directory(s3, args.dataset_path, args.bucket_name, args.bucket_prefix)
+    upload_directory(s3, path=args.dataset_path, bucket_name=args.bucket_name, prefix=args.bucket_prefix)
 
 
 if __name__ == "__main__":

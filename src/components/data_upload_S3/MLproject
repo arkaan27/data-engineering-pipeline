@@ -1,5 +1,5 @@
 name: uploading_data
-conda_env: conda.yml
+conda_env: conda.yaml
 
 entry_points:
   main:
@@ -16,6 +16,7 @@ entry_points:
       AWS_SESSION_TOKEN:
         description: Your AWS Session Token
         type: string
+        default: x
 
       AWS_DEFAULT_REGION:
         description: YOUR AWS Default region where the bucket is present
