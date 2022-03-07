@@ -5,25 +5,55 @@ entry_points:
   main:
     parameters:
 
+      AWS_ACCESS_KEY_ID:
+        description: Your AWS Access Key ID
+        type: string
+
+      AWS_SECRET_ACCESS_KEY:
+        description: Your AWS Secret Access Key
+        type: string
+
+      AWS_SESSION_TOKEN:
+        description: Your AWS Session Token
+        type: string
+
+      AWS_DEFAULT_REGION:
+        description: YOUR AWS Default region where the bucket is present
+        type: string
+
+      output_directory:
+        description: Fully qualified name of the directory to store processed results
+        type: string
+        default: Processed_data
+
       input_artifact:
         description: Fully qualified name for the artifact
         type: string
-        default: data_upload
+        default: raw_data:latest
 
       output_artifact:
         description: Name for the W&B artifact that will be created
         type: string
-        default: tabular_data
+        default: processed_data
 
       output_type:
         description: Type of the artifact to create
-        type: table
+        type: string
+        default: processed_data
 
       output_description:
-        description: Artifact after processing the data
+        description: Description of the Artifact for reference
         type: string
-        default: Processing the data by converting Json file to tabular format
+        default: Processing the data by separating json file to different resource types
 
 
     command: >-
-        python run.py  --input_artifact {input_artifact}  --output_artifact {output_artifact}  --output_type {output_type}  --output_description {output_description}
+        python run.py  --AWS_ACCESS_KEY_ID {AWS_ACCESS_KEY_ID} \
+                       --AWS_SECRET_ACCESS_KEY {AWS_SECRET_ACCESS_KEY} \
+                       --AWS_SESSION_TOKEN {AWS_SESSION_TOKEN} \
+                       --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
+                       --input_artifact {input_artifact}  \
+                       --output_directory {output_directory} \
+                       --output_artifact {output_artifact}  \
+                       --output_type {output_type}  \
+                       --output_description {output_description}
