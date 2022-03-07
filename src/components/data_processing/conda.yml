@@ -3,7 +3,10 @@ channels:
   - conda-forge
   - defaults
 dependencies:
-  - pip=20.3.3
+  - pip=22.0.3
+  - requests
+  - mlflow=1.14.1
   - pip:
       - wandb==0.10.31
-      - boto3==1.21.12
+      - boto3
+      - git+https://github.com/arkaan27/data-engineering-pipeline.git#egg=data_upload_S3&subdirectory=src/components

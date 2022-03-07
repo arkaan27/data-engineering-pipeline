@@ -81,7 +81,7 @@ def go(config: DictConfig):
                     "output_directory": config["data_processing"]["output_directory"],
                     "output_artifact": "processed_data",
                     "output_type": "processed_data",
-                    "output_description": "Processing the data by seperating json file to different files & uploaded processed data to S3"
+                    "output_description": "Processing the data by seperating json file to different files & uploading processed data to S3"
 
 
 

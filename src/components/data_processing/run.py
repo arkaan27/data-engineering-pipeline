@@ -11,9 +11,10 @@ import json
 import argparse
 import logging
 import boto3
+from botocore.exceptions import ClientError
 import wandb
 from collections import defaultdict
-from src.components.data_upload_S3.run import bucket_exists, upload_directory
+from data_upload_S3.run import bucket_exists, upload_directory
 
 # Basic Logging
 logging.basicConfig(
