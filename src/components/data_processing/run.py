@@ -43,48 +43,56 @@ def go(args):
     if not os.path.exists(args.output_directory):
         os.mkdir(args.output_directory)
 
-    # Looping overall the files in the directory
-    logger.info("Processing files...")
-    for root, dirs, files in os.walk(data_dir):
-        for file in files:
-            with open(os.path.join(root, file), 'r') as f:
+    # Checking if the data has been processed already
+    logging.info("Checking if Processing has been completed already")
+    if len(os.listdir(args.output_directory)) == 0:
+        # Looping overall the files in the directory
+        logger.info("Processing files...")
+        for root, dirs, files in os.walk(data_dir):
+            for file in files:
+                with open(os.path.join(root, file), 'r') as f:
 
-                # Reading the file
-                extracted_data = json.load(f)
+                    # Reading the file
+                    extracted_data = json.load(f)
 
-                # Extracting entries of the file
-                entries = extracted_data['entry']
+                    # Extracting entries of the file
+                    entries = extracted_data['entry']
 
-                # Creating set & dictionary
-                resource_types = set()
-                entry_resources = defaultdict(list)
+                    # Creating set & dictionary
+                    resource_types = set()
+                    entry_resources = defaultdict(list)
 
-                # Extracting data to dictionary based on resource type
-                for resource in entries:
-                    resource_type = resource["resource"]["resourceType"]
-                    resource_types.add(resource_type)
-                    resource_file_path = args.output_directory + "/" + f"{resource_type}.json"
-                    entry_resources[resource_file_path].append(resource)
+                    # Extracting data to dictionary based on resource type
+                    for resource in entries:
+                        resource_type = resource["resource"]["resourceType"]
+                        resource_types.add(resource_type)
+                        resource_file_path = args.output_directory + "/" + f"{resource_type}.json"
+                        entry_resources[resource_file_path].append(resource)
 
-                for resource_file_path, resources in entry_resources.items():
-                    if os.path.exists(resource_file_path):
-                        # Getting existing contents of each resource
-                        with open(resource_file_path, 'r') as i:
-                            contents = json.load(i)
+                    for resource_file_path, resources in entry_resources.items():
+                        if os.path.exists(resource_file_path):
+                            # Getting existing contents of each resource
+                            with open(resource_file_path, 'r') as i:
+                                contents = json.load(i)
 
-                        contents.extend(resources)
-                    else:
-                        contents = resources
+                            contents.extend(resources)
+                        else:
+                            contents = resources
 
-                    # Saving it to output dir
-                    with open(resource_file_path, 'w') as j:
-                        json.dump(contents, j)
+                        # Saving it to output dir
+                        with open(resource_file_path, 'w') as j:
+                            json.dump(contents, j)
 
-    # Logging Success of looping
-    logger.info("SUCCESS: Processing Files Completed")
+        # Logging Success of looping
+        logger.info("SUCCESS: Processing Files Completed")
 
     # Creating AWS Session
     logger.info("Creating AWS Session for Accessing S3")
+
+    # Adding the Access key  & Secret Access key to the environment
+    os.environ["AWS_ACCESS_KEY_ID"]= args.AWS_ACCESS_KEY_ID
+    os.environ["AWS_SECRET_ACCESS_KEY"]= args.AWS_SECRET_ACCESS_KEY
+
     s3 = boto3.resource(
         service_name='s3',
         region_name=args.AWS_DEFAULT_REGION,
@@ -96,6 +104,7 @@ def go(args):
     logger.info("Uploading directory to S3")
     bucket_exists(s3, args.bucket_name)
     upload_directory(s3, os.path.join(os.getcwd(), args.output_directory), args.bucket_name, args.output_directory)
+    logger.info("")
 
     # Creating output artifact
     logger.info("Creating Output Artifact")
@@ -107,7 +116,8 @@ def go(args):
 
     # Referencing the data to the new artifact
     logger.info("Referencing the S3 bucket data to Weights & Biases Artifact")
-    artifact.add_reference(args.bucket_path)
+    bucket_path = "s3://"+args.bucket_name+"/"+args.output_directory
+    artifact.add_reference(bucket_path)
 
     # Logging artifact
     logging.info("Logging the artifact")
