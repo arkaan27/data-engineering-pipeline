@@ -28,7 +28,7 @@ logger = logging.getLogger()
 def go(args):
     # Creating a run instance
     logger.info("Creating the run on Weights & Biases")
-    run = wandb.init(project="data_pipeline", group="dev", job_type="data_processing")
+    run = wandb.init(project="data-engineering", group="dev", job_type="data_processing")
 
     # Updating the parameters using arguments input
     logger.info("Updating the Parameters from input")
@@ -40,8 +40,8 @@ def go(args):
 
     # Creating output dir for the processed data
     logger.info("Creating the directory for output files")
-    if not os.path.exists(args.output_dir):
-        os.mkdir(args.output_dir)
+    if not os.path.exists(args.output_directory):
+        os.mkdir(args.output_directory)
 
     # Looping overall the files in the directory
     logger.info("Processing files...")
@@ -63,7 +63,7 @@ def go(args):
                 for resource in entries:
                     resource_type = resource["resource"]["resourceType"]
                     resource_types.add(resource_type)
-                    resource_file_path = args.output_dir + "/" + f"{resource_type}.json"
+                    resource_file_path = args.output_directory + "/" + f"{resource_type}.json"
                     entry_resources[resource_file_path].append(resource)
 
                 for resource_file_path, resources in entry_resources.items():
@@ -90,7 +90,6 @@ def go(args):
         region_name=args.AWS_DEFAULT_REGION,
         aws_access_key_id=args.AWS_ACCESS_KEY_ID,
         aws_secret_access_key=args.AWS_SECRET_ACCESS_KEY,
-        aws_session_token=args.AWS_SESSION_TOKEN
     )
 
     # Adding Processed Files to S3
@@ -143,6 +142,14 @@ if __name__ == "__main__":
         "--AWS_DEFAULT_REGION",
         type=str,
         help="Your AWS Default Region where the bucket is located",
+        required=True,
+
+    )
+
+    parser.add_argument(
+        "--bucket_name",
+        type=str,
+        help="The bucket name to upload the data",
         required=True,
     )
 

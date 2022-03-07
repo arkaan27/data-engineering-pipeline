@@ -133,7 +133,10 @@ src/components/EDA/processed_data
 src/components/EDA/artifacts
 src/components/EDA/wandb
 
+src/components/data_upload_S3/mlruns
 src/components/data_upload_WandB/mlruns
 src/components/data_upload_WandB/wandb
 
 src/components/data_processing/mlruns
+src/components/data_processing/wandb
+src/components/data_processing/artifacts
