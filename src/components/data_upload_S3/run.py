@@ -1,10 +1,16 @@
 """
-Upload data to S3 Bucket
+Upload data directory to S3 Bucket and creating prefix if it does not exist
 
-Make sure the environment variables consists of
-
+Requires:
 1. AWS_ACCESS_KEY_ID
 2. AWS_SECRET_ACCESS_KEY
+3. AWS_DEFAULT_REGION
+4. bucket_name
+5. bucket_prefix
+6. dataset_path
+
+Optional:
+1. AWS_SESSION_TOKEN
 
 Author: Arkaan Quanunga
 Date: 04/03/2022
@@ -24,9 +30,7 @@ logging.basicConfig(
 )
 
 
-
 def bucket_exists(bucket_name):
-
     # Logging the bucketname for reference
     logging.info("Bucket name: {}".format(bucket_name))
 
@@ -62,15 +66,6 @@ def upload_directory(path, bucket_name, prefix):
     else:
         logging.error("ERROR: File path does not exist!")
 
-    # Creating S3 Resource From the Session.
-    s3 = boto3.resource(
-        service_name='s3',
-        region_name=args.AWS_DEFAULT_REGION,
-        aws_access_key_id=args.AWS_ACCESS_KEY_ID,
-        aws_secret_access_key=args.AWS_SECRET_ACCESS_KEY,
-        aws_session_token= args.AWS_SESSION_TOKEN
-    )
-
     # Uploading the files to S3 bucket
     try:
         for root, dirs, files in os.walk(path):
@@ -82,7 +77,6 @@ def upload_directory(path, bucket_name, prefix):
 
 
 def go(args):
-
     # Creating S3 Resource From the Session.
     s3 = boto3.resource(
         service_name='s3',
@@ -129,7 +123,6 @@ if __name__ == "__main__":
         help="Your AWS Default Region where the bucket is located",
         required=True,
     )
-
 
     parser.add_argument(
         "--bucket_name",
