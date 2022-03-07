@@ -1,0 +1,31 @@
+{
+    "os": "Linux-5.10.16.3-microsoft-standard-WSL2-x86_64-with-glibc2.31",
+    "python": "3.10.2",
+    "heartbeatAt": "2022-03-06T22:25:45.778946",
+    "startedAt": "2022-03-06T22:25:43.690788",
+    "docker": null,
+    "cpu_count": 8,
+    "cuda": null,
+    "args": [
+        "--bucket_path",
+        "s3://data-engineering-pipeline/FHIR-data",
+        "--output_artifact",
+        "raw_data",
+        "--output_type",
+        "raw_data",
+        "--output_description",
+        "Uploading data to Weights & Biases from S3 for version tracking"
+    ],
+    "state": "running",
+    "program": "/mnt/d/data-engineering-pipeline/src/components/data_upload_WandB/run.py",
+    "codePath": "src/components/data_upload_WandB/run.py",
+    "git": {
+        "remote": "https://github.com/arkaan27/data-engineering-pipeline.git",
+        "commit": "777261286dbf46a8b22df6488dcd4f3c0ca1e59b"
+    },
+    "email": null,
+    "root": "/mnt/d/data-engineering-pipeline",
+    "host": "DESKTOP-8F2FI2T",
+    "username": "root",
+    "executable": "/root/miniconda3/envs/mlflow-4043d7da9cdcf0525dad4e65f831627df9abdf9c/bin/python"
+}

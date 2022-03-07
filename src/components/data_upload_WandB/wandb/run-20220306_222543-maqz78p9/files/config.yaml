@@ -1,0 +1,26 @@
+wandb_version: 1
+
+_wandb:
+  desc: null
+  value:
+    cli_version: 0.10.31
+    is_jupyter_run: false
+    is_kaggle_kernel: false
+    python_version: 3.10.2
+    t:
+      4: 3.10.2
+      5: 0.10.31
+      8:
+      - 5
+bucket_path:
+  desc: null
+  value: s3://data-engineering-pipeline/FHIR-data
+output_artifact:
+  desc: null
+  value: raw_data
+output_description:
+  desc: null
+  value: Uploading data to Weights & Biases from S3 for version tracking
+output_type:
+  desc: null
+  value: raw_data

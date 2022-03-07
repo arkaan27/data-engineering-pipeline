@@ -21,15 +21,15 @@ entry_points:
         description: YOUR AWS Default region where the bucket is present
         type: string
 
-      output_directory:
-        description: Fully qualified name of the directory to store processed results
-        type: string
-        default: Processed_data
-
       input_artifact:
         description: Fully qualified name for the artifact
         type: string
         default: raw_data:latest
+
+      output_directory:
+        description: Fully qualified name of the directory to store processed results
+        type: string
+        default: Processed_data
 
       output_artifact:
         description: Name for the W&B artifact that will be created
@@ -44,7 +44,6 @@ entry_points:
       output_description:
         description: Description of the Artifact for reference
         type: string
-        default: Processing the data by separating json file to different resource types
 
 
     command: >-

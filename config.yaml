@@ -24,4 +24,4 @@ data_upload_S3:
 
 data_processing:
   # Name of the directory to store the processed data on local machine
-  output_directory: "Processed_data"
+  output_directory: "processed_data"

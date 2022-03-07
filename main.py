@@ -42,7 +42,7 @@ def go(config: DictConfig):
         if "data_upload_S3" in active_steps:
             # Upload files to S3 bucket
             _ = mlflow.run(
-                os.path.join(hydra.utils.get_original_cwd,"src","components", "data_upload_S3"),
+                os.path.join(hydra.utils.get_original_cwd(),"src","components", "data_upload_S3"),
                 "main",
                 parameters={
                     "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
@@ -66,6 +66,26 @@ def go(config: DictConfig):
                     "output_type": "data_upload",
                     "output_description": "Artifact for storage of data on Weights & Biases",
                 },
+            )
+        if "data_processing" in active_steps:
+            # Process data by extracting crucial files from data uploaded
+            _ = mlflow.run(
+                os.path.join(hydra.utils.get_original_cwd(),"src", "components", "data_processing"),
+                "main",
+                parameters={
+                    "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
+                    "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
+                    "AWS_SESSION_TOKEN": config["main"]["AWS"]["AWS_SESSION_TOKEN"],
+                    "AWS_DEFAULT_REGION": config["main"]["AWS"]["AWS_DEFAULT_REGION"],
+                    "input_artifact": "raw_data:latest",
+                    "output_directory": config["data_processing"]["output_directory"],
+                    "output_artifact": "processed_data",
+                    "output_type": "processed_data",
+                    "output_description": "Processing the data by seperating json file to different files & uploaded processed data to S3"
+
+
+
+                }
             )
 
 
