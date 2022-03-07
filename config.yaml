@@ -2,8 +2,17 @@ main:
 
   project_name: data-engineering-pipeline
   experiment_name: development
+
+  # AWS Settings
+  AWS:
+    AWS_ACCESS_KEY_ID: "Your_Access_Key_Here"
+    AWS_SECRET_ACCESS_KEY: "Your_Secret_Access_key_here"
+    AWS_SESSION_TOKEN: "Your_Session_Token_Here"
+    DEFAULT_REGION_NAME: eu-west-2
+
   steps: all
 data_upload_S3:
+
   # The path towards your dataset to be uploaded
   path: "D:/data-engineering-pipeline/data"
 
@@ -11,11 +20,8 @@ data_upload_S3:
   bucket_name: "data-engineering-pipeline"
 
   # The prefix of the bucket data to be uploaded into
-  prefix_name: "FHIR-data"
-data_upload:
-
-  bucket_path: s3://data-engineering-pipeline/FHIR-data
-
+  bucket_prefix: "FHIR-data"
 
 data_processing:
-
+  # Name of the directory to store the processed data on local machine
+  output_directory: "Processed_data"
