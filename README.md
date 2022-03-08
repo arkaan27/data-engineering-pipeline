@@ -1,7 +1,49 @@
+![name-shield]
+[![LinkedIn][linkedin-shield]][linkedin-url]
+[![Portfolio][Portfolio-shield]][portfolio-url]
+
 # Problem Statement
 
-You have data arriving every day in your local machine/ data is getting uploaded to Amazon S3. The data is of type FHIR data
-& you want to automate the process of converting the data to a readable format. This pipeline helps you achieve the automation.
+You have data arriving every day in your local machine or data is getting uploaded to Amazon S3. The data is of type FHIR data
+& you want to automate the process of converting the data to a more readable format. This pipeline helps you achieve the automation of such processing.
+
+Language used: Python
+
+# Scope
+
+This pipeline is able to separate any JSON format FHIR data to separate files based on resource types.
+
+The following are the common resource types in FHIR data:
+
+1. AllergyIntolerance
+2. CarePlan
+3. CareTeam
+4. Claim
+5. Condition
+6. Device
+7. DiagnosticReport
+8. DocumentReference
+9. Encounter
+10. ExplanationOfBenefit
+11. ImagingStudy
+12. Immunization
+13. Medication
+14. MedicationAdministration
+15. MedicationRequest
+16. Observation
+17. Patient
+18. Procedure
+19. Provenance
+20. SupplyDelivery
+
+After separating into different resource types, this pipeline is able to input those data into MongoDB database.
+
+This pipeline can operate with following limitations:
+
+Operating Systems: Linux, Windows or Mac
+
+Database Instance: MongoDB
+
 
 # Table of Contents
 
@@ -195,6 +237,10 @@ replace YOUR-BUCKET with your bucket name that you created
 11. Copy the AWS ACCESS KEY ID and place it in [config.yaml](config.yaml) where it says AWS_ACCESS_KEY_ID
 12. Repeat for AWS SECRET ACCESS KEY
 
+## MongoDB Setup
+
+You must create a MongoDB instance to be able to add to the database.
+
 
 # Improvements
 
@@ -258,3 +304,13 @@ Alternatively you can use AWS GLUE to extract the JSON files from Amazon S3 thro
 [https://docs.jelastic.com/connection-to-mongodb-python/](https://docs.jelastic.com/connection-to-mongodb-python/)
 
 [https://docs.aws.amazon.com/AmazonS3/latest/userguide/walkthrough1.html](https://docs.aws.amazon.com/AmazonS3/latest/userguide/walkthrough1.html)
+
+
+
+<!-- MARKDOWN LINKS & IMAGES -->
+<!-- https://www.markdownguide.org/basic-syntax/#reference-style-links -->
+[name-shield]: https://img.shields.io/badge/Author-Arkaan%20Quanunga-blue?style=for-the-badge
+[linkedin-shield]: https://img.shields.io/badge/-LinkedIn-Black.svg?style=for-the-badge&logo=linkedin&colorB=555
+[linkedin-url]: https://www.linkedin.com/in/arkaan-quanunga/
+[portfolio-shield]: https://img.shields.io/badge/-Portfolio-green.svg?style=for-the-badge&logo=Portfolio&colorB=555
+[portfolio-url]: https://www.arkaanquanunga.com/
