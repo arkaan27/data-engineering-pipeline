@@ -2,6 +2,15 @@
 """
 Download from WandB the raw dataset and extract different resource types, exporting the result to a new artifact
 
+Requirements:
+1. AWS_ACCESS_KEY_ID
+2. AWS_SECRET_ACCESS_KEY
+3. AWS_DEFAULT_REGION
+4. Input_artifact containing the dataset to be processed
+5. output_artifact- name of the output artifact that is going to be produced - Default: processed_data
+6. output_type- default: processed_data
+7. output_description- the description of the artifact for reference
+
 Author: Arkaan Quanunga
 Date: 04/03/2022
 
@@ -33,6 +42,10 @@ def go(args):
     # Updating the parameters using arguments input
     logger.info("Updating the Parameters from input")
     run.config.update(args)
+
+    # Adding the Access key  & Secret Access key to the environment
+    os.environ["AWS_ACCESS_KEY_ID"]= args.AWS_ACCESS_KEY_ID
+    os.environ["AWS_SECRET_ACCESS_KEY"]= args.AWS_SECRET_ACCESS_KEY
 
     # Downloading the artifact and logging
     logger.info("Downloading the artifact")
@@ -89,9 +102,6 @@ def go(args):
     # Creating AWS Session
     logger.info("Creating AWS Session for Accessing S3")
 
-    # Adding the Access key  & Secret Access key to the environment
-    os.environ["AWS_ACCESS_KEY_ID"]= args.AWS_ACCESS_KEY_ID
-    os.environ["AWS_SECRET_ACCESS_KEY"]= args.AWS_SECRET_ACCESS_KEY
 
     s3 = boto3.resource(
         service_name='s3',
@@ -139,13 +149,6 @@ if __name__ == "__main__":
         type=str,
         help="Your AWS SECRET ACCESS KEY for accessing the bucket",
         required=True,
-    )
-
-    parser.add_argument(
-        "--AWS_SESSION_TOKEN",
-        type=str,
-        help="Your AWS Session Token for accessing the bucket",
-        required=False,
     )
 
     parser.add_argument(

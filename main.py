@@ -47,7 +47,6 @@ def go(config: DictConfig):
                 parameters={
                     "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
                     "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
-                    "AWS_SESSION_TOKEN": config["main"]["AWS"]["AWS_SESSION_TOKEN"],
                     "AWS_DEFAULT_REGION": config["main"]["AWS"]["AWS_DEFAULT_REGION"],
                     "bucket_name": config["data_upload_S3"]["bucket_name"],
                     "bucket_prefix": config["data_upload_S3"]["bucket_prefix"],

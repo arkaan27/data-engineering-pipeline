@@ -43,13 +43,13 @@ If you have added the default for few parameters, you will not need to input tho
 
 5. Run the following code:
     
-        mlflow run .  --AWS_ACCESS_KEY_ID=xxx \
-                       --AWS_SECRET_ACCESS_KEY=xxx \
-                       --AWS_SESSION_TOKEN=xxx \
-                       --AWS_DEFAULT_REGION=xxx \
-                       --input_artifact=xxx  \
-                       --output_directory=xxx \
-                       --output_artifact=xxx  \
-                       --output_type=xxx  \
-                       --output_description=xxx
+        mlflow run . -P AWS_ACCESS_KEY_ID=xxx \
+                     -P AWS_SECRET_ACCESS_KEY=xxx \
+                     -P AWS_SESSION_TOKEN=xxx \
+                     -P AWS_DEFAULT_REGION=xxx \
+                     -P input_artifact=xxx  \
+                     -P output_directory=xxx \
+                     -P output_artifact=xxx  \
+                     -P output_type=xxx  \
+                     -P output_description=xxx
 

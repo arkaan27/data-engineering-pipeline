@@ -7,7 +7,6 @@ main:
   AWS:
     AWS_ACCESS_KEY_ID: "Your_Access_Key_Here"
     AWS_SECRET_ACCESS_KEY: "Your_Secret_Access_key_here"
-    AWS_SESSION_TOKEN: "Your_Session_Token_Here"
     DEFAULT_REGION_NAME: eu-west-2
 
   #MONGODB Settings

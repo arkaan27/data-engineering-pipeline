@@ -13,11 +13,6 @@ entry_points:
         description: Your AWS Secret Access Key
         type: string
 
-      AWS_SESSION_TOKEN:
-        description: Your AWS Session Token
-        type: string
-        default: x
-
       AWS_DEFAULT_REGION:
         description: YOUR AWS Default region where the bucket is present
         type: string
@@ -50,7 +45,6 @@ entry_points:
     command: >-
         python run.py  --AWS_ACCESS_KEY_ID {AWS_ACCESS_KEY_ID} \
                        --AWS_SECRET_ACCESS_KEY {AWS_SECRET_ACCESS_KEY} \
-                       --AWS_SESSION_TOKEN {AWS_SESSION_TOKEN} \
                        --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
                        --input_artifact {input_artifact}  \
                        --output_directory {output_directory} \
