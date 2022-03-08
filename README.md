@@ -67,16 +67,16 @@ Database Instance: MongoDB
 * [Summary](#Summary)
 * [Scope](#Scope)
 * [Architecture](#Architecture)
-  * [Anaconda/Miniconda3 Setup](##Anaconda/miniconda3-Setup)
-  * [Weights & Biases Setup](##Weights-&-Biases-Setup)
-  * [AWS S3 Setup](##AWS-S3-Setup)
-  * [MongoDB Setup](##MongoDB-Setup)
+  * [Anaconda/Miniconda3 Setup](#Anaconda/miniconda3-Setup)
+  * [Weights & Biases Setup](#Weights-&-Biases-Setup)
+  * [AWS S3 Setup](#AWS-S3-Setup)
+  * [MongoDB Setup](#MongoDB-Setup)
 * [Improvements](#Improvements)
-  * [Documentation](##Documentation)
-  * [Architecture](##Architecture)
-  * [Pipeline](##Pipeline)
-  * [Testing](##Testing)
-  * [Cloud Implementation](##Cloud-Implimentation)
+  * [Documentation](#Documentation)
+  * [Architectures](#Architectures)
+  * [Pipeline](#Pipeline)
+  * [Testing](#Testing)
+  * [Cloud Implementation](#Cloud-Implementation)
 * [References](#References)
 
 # Architecture
@@ -282,7 +282,7 @@ This project has number of improvement suggestions and require refactoring of co
 1. Create Software Requirement Specification for longer structured projects for reproducibility & re-usability
 2. Create Test Plan before testing of components for reproducibility & re-usability by other team members
 
-## Architecture
+## Architectures
 
 Add Docker implementation - need to learn how to use docker
 
@@ -307,7 +307,7 @@ Use of ECS & ECK on AWS is also possible through docker.
 
 3. Use conftest.yml and pytest to add the data check testing to pipeline
 
-## Cloud Implementation:
+## Cloud Implementation
 This pipeline can be improved by restructuring it through AWS:
 
 1. Create S3 Event Notifications whenever data has been added to a particular prefix
