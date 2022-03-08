@@ -140,3 +140,7 @@ src/components/data_upload_WandB/wandb
 src/components/data_processing/mlruns
 src/components/data_processing/wandb
 src/components/data_processing/artifacts
+
+src/components/database_upload/mlruns
+src/components/database_upload/wandb
+src/components/database_upload/artifacts
