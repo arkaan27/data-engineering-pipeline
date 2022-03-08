@@ -9,6 +9,18 @@ You have data arriving every day in your local machine or data is getting upload
 
 Language used: Python
 
+# Summary
+This pipeline focuses on processing of FHIR data and converting it into a readable format.
+
+It consists of the following components:
+
+1. Data_upload_S3 - This component is run whenever you have data arriving at your local center to upload data to S3
+2. Data_upload_WandB - This component is used when you have an existing data in S3 & want to link it to the pipeline for access
+3. Data_processing- The main component which separates the JSON files based on resource types
+4. Database_upload- This component is used to upload the processed data to MongoDB database
+
+Each file has its own environment it creates for running operations. 
+
 # Scope
 
 This pipeline is able to separate any JSON format FHIR data to separate files based on resource types.
@@ -38,6 +50,11 @@ The following are the common resource types in FHIR data:
 
 After separating into different resource types, this pipeline is able to input those data into MongoDB database.
 
+The following is not covered in this pipeline:
+
+We can form cluster in the database with these files and link each resource type to the primary key that is being used. 
+Mainly it should be Patient Name for accessing all the resource types for that name.
+
 This pipeline can operate with following limitations:
 
 Operating Systems: Linux, Windows or Mac
@@ -46,7 +63,21 @@ Database Instance: MongoDB
 
 
 # Table of Contents
-
+* [Problem Statement](#Problem-Statement)
+* [Summary](#Summary)
+* [Scope](#Scope)
+* [Architecture](#Architecture)
+  * [Anaconda/Miniconda3 Setup](##Anaconda/miniconda3-Setup)
+  * [Weights & Biases Setup](##Weights-&-Biases-Setup)
+  * [AWS S3 Setup](##AWS-S3-Setup)
+  * [MongoDB Setup](##MongoDB-Setup)
+* [Improvements](#Improvements)
+  * [Documentation](##Documentation)
+  * [Architecture](##Architecture)
+  * [Pipeline](##Pipeline)
+  * [Testing](##Testing)
+  * [Cloud Implementation](##Cloud-Implimentation)
+* [References](#References)
 
 # Architecture
 
@@ -83,7 +114,7 @@ If it does not then try:
 
     source miniconda3/bin/activate
 
-## Installing environment
+### Installing environment
 
 Navigate to the project folder:
 
@@ -93,7 +124,7 @@ You can create a virtual environment from the following code for this project:
     
     `conda env create -f environment.yaml`
 
-## Activating Environment
+### Activating Environment
 
 You need to activate environment before running any particular component
 
