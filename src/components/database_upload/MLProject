@@ -1,0 +1,47 @@
+name: database_upload
+conda_env: conda.yaml
+
+entry_points:
+  main:
+    parameters:
+
+      MONGO_Username:
+        description: Your Mongo DB Username
+        type: string
+
+      Mongo_Password:
+        description: Your Mongo DB password
+        type: string
+
+      Database_name:
+        description: Your database name to create/update on MongoDB
+        type: string
+        default: FHIR-data
+
+      input_artifact:
+        description: Fully qualified name for the artifact
+        type: string
+        default: processed_data:latest
+
+      output_artifact:
+        description: Name for the W&B artifact that will be created
+        type: string
+        default: database_upload
+
+      output_type:
+        description: Type of the artifact to create
+        type: string
+        default: database_upload
+
+      output_description:
+        description: Description of the Artifact for reference
+        type: string
+
+    command: >-
+        python run.py --MONGO_Username {MONGO_Username} \
+                      --MONGO_Password {MONGO_Password} \
+                      --Database_name {Database_name} \
+                      --input_artifact {input_artifact} \
+                      --output_artifact {output_artifact} \
+                      --output_type {output_type} \
+                      --output_description {output_description}

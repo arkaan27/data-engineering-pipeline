@@ -1,0 +1,12 @@
+name: rds_upload
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=22.0.3
+  - requests
+  - mlflow=1.14.1
+  - pip:
+      - wandb==0.10.31
+      - boto3
+      - pymongo
