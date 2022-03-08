@@ -166,6 +166,7 @@ Naturally, root account has too many privileges so if root account gets compromi
 6. Choose Json format & copy the following code:
 
 
+
     {
          "Version": "2012-10-17",
          "Statement":[
@@ -184,6 +185,7 @@ Naturally, root account has too many privileges so if root account gets compromi
           }
        ]
     }
+
 
 replace YOUR-BUCKET with your bucket name that you created
 
