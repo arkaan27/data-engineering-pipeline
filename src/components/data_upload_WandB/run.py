@@ -40,6 +40,10 @@ def go(args):
     logging.info("Updating the parameters of the run")
     run.config.update(args)
 
+    # Adding AWS Credentials to the environment
+    os.environ["AWS_ACCESS_KEY_ID"]= args.AWS_ACCESS_KEY_ID
+    os.environ["AWS_SECRET_ACCESS_KEY"]= args.AWS_SECRET_ACCESS_KEY
+
     # Creating artifact
     logging.info("Creating Artifact")
     artifact = wandb.Artifact(
@@ -59,6 +63,21 @@ def go(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Data upload process to Weights & Biases")
+
+
+    parser.add_argument(
+        "--AWS_ACCESS_KEY_ID",
+        type=str,
+        help="Your AWS ACCESS KEY ID for accessing the bucket",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--AWS_SECRET_ACCESS_KEY",
+        type=str,
+        help="Your AWS Secret Access Key for accessing the bucket",
+        required=True,
+    )
 
     parser.add_argument(
         "--bucket_path",

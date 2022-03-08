@@ -61,6 +61,8 @@ def go(config: DictConfig):
                 os.path.join(hydra.utils.get_original_cwd(), "src", "components","data_upload_WandB"),
                 "main",
                 parameters={
+                    "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
+                    "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
                     "bucket_path": "s3://"+config['data_upload_S3']['bucket_name']+"/"+config["data_upload_S3"]["bucket_prefix"],
                     "output_artifact": "raw_data",
                     "output_type": "data_upload",

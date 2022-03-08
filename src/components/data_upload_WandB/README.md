@@ -6,62 +6,18 @@ the next component data processing.
 Prerequisites:
 1. Setup AWS account
 2. Setup AWS S3 bucket with versioning & encryption enabled with SS3 key
-3. Uploaded necessary data that needs to be converted to AWS S3 bucket
+3. Uploaded necessary data that needs to be converted to AWS S3 bucket - by following these components instructions: [data_upload_S3](src/components/data_upload_S3) 
 
-# Set up
+# Running this component
 
-Firstly you will need to add your AWS credentials to your environment variables
+For running the file use the following code:
 
-## Linux
-1. Open up Linux terminal
-2. Copy the following code:
+    mlflow run . -P AWS_ACCESS_KEY_ID=xxx \
+                      -P AWS_SECRET_ACCESS_KEY=xxx \
+                      -P bucket_path=xxx \
+                      -P output_artifact=xxx  \
+                      -P output_type=xxx  \
+                      -P output_description=xxx
 
-`export AWS_ACCESS_KEY_ID= XXX`
+Replace the xxx with your own parameter details.
 
-3. Replace XXX with your ACCESS KEY ID from AWS account linked to your S3 bucket name
-4. Press Enter
-5. Copy the following code:
-
-`export AWS_SECRET_ACCESS_KEY= XXX`
-
-6. Replace XXX with your SECRET ACCESS KEY from AWS account linked to your S3 bucket name
-7. Press Enter
-
-Optional_step:
-
-8. Copy the following code:
-
-`export AWS_SECRET_SESSION_TOKEN= XXX`
-
-9. Replace XXX with your SECRET SESSION TOKEN if provided by a 3rd party organiser
-10. Press Enter
-
-## Windows
-
-1. Open up windows terminal
-2. Copy the following code:
-
-`SET AWS_ACCESS_KEY_ID= XXX`
-
-3. Replace XXX with your ACCESS KEY ID from AWS account linked to your S3 bucket name
-4. Press Enter
-5. Copy the following code:
-
-`SET AWS_SECRET_ACCESS_KEY= XXX`
-
-6. Replace XXX with your SECRET ACCESS KEY from AWS account linked to your S3 bucket name
-7. Press Enter
-
-Optional_step:
-
-8. Copy the following code:
-
-`SET AWS_SECRET_SESSION_TOKEN= XXX`
-
-9. Replace XXX with your SECRET SESSION TOKEN if provided by a 3rd party organiser
-10. Press Enter
-
-
-This will ensure your pipeline will have access to your AWS bucket and is ready to upload some data to Weights and Biases
-
-# Run
