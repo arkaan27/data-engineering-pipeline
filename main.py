@@ -15,10 +15,10 @@ import hydra
 from omegaconf import DictConfig
 
 _steps = [
+    "data_upload_S3"
     "data_upload",
     "data_processing",
-    "data_check",
-    "database_write"
+    "database_upload"
 ]
 
 
@@ -81,13 +81,28 @@ def go(config: DictConfig):
                     "output_directory": config["data_processing"]["output_directory"],
                     "output_artifact": "processed_data",
                     "output_type": "processed_data",
-                    "output_description": "Processing the data by seperating json file to different files & uploading processed data to S3"
-
-
-
+                    "output_description": "Processing the data by seperating json file to different files & uploading processed data to S3",
                 }
             )
 
+        if "database_upload" in active_steps:
+            # Uploading Processed data to database
+            _ = mlflow.run(
+                os.path.join(os.path.join(hydra.utils.get_original_cwd(),"src", "components", "database_upload")),
+                "main",
+                parameters={
+                    "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
+                    "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
+                    "MONGO_Username": config["main"]["MONGODB"]["MONGO_Username"],
+                    "MONGO_Password": config["main"]["MONGODB"]["MONGO_Password"],
+                    "MONGO_Cluster_name": config["main"]["MONGODB"]["MONGO_Cluster_name"],
+                    "Database_name": config["database_upload"]["Database_name"],
+                    "input_artifact": "processed_data:latest",
+                    "output_artifact": "database_upload",
+                    "output_type": "database",
+                    "output_description": "Uploading the processed data to a MONGO DB database for query purposes"
+                }
+            )
 
 
 if __name__ == "__main__":
