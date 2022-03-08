@@ -9,9 +9,6 @@ Requires:
 5. bucket_prefix
 6. dataset_path
 
-Optional:
-1. AWS_SESSION_TOKEN
-
 Author: Arkaan Quanunga
 Date: 04/03/2022
 """
@@ -110,13 +107,6 @@ if __name__ == "__main__":
         type=str,
         help="Your AWS SECRET ACCESS KEY for accessing the bucket",
         required=True,
-    )
-
-    parser.add_argument(
-        "--AWS_SESSION_TOKEN",
-        type=str,
-        help="Your AWS Session Token for accessing the bucket",
-        required=False,
     )
 
     parser.add_argument(

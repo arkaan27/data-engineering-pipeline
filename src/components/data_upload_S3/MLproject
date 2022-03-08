@@ -13,11 +13,6 @@ entry_points:
         description: Your AWS Secret Access Key
         type: string
 
-      AWS_SESSION_TOKEN:
-        description: Your AWS Session Token
-        type: string
-        default: x
-
       AWS_DEFAULT_REGION:
         description: YOUR AWS Default region where the bucket is present
         type: string

@@ -1,27 +1,50 @@
-# Data Engineer - Technical Assesment
-Our tech teams are curious, driven, intelligent, pragmatic, collaborative and open-minded and you should be too. 
+# Problem Statement
 
-## Testing Goals
-We are testing your ability to design and prototype a scalable data-pipeline (with code) underpinned with good data/software engineering principles from a blank canvas. You will need to use your intellect, creativity, judgement and be comfortable making decisions to produce a solution. 
+You have data arriving every day in your local machine/ data is getting uploaded to Amazon S3. The data is of type FHIR data
+& you want to automate the process of converting the data to a readable format. This pipeline helps you achieve the automation.
 
-You will have approximately 1 week to complete this task but can as much or as little time as you deem necessary to **demonstrate your understanding of the problem, your range of skills and approach to problem solving**.
-
-Some successful candidates have spent as little as 3 hours whilst others have used the full week because they've enjoyed exploring different ideas, technologies and approaches. 
-
-## The Task
-An external system / supplier is sending patient data to our platform using the FHIR standard. Our analytics teams find this format difficult to work with when creating dashboards and visualizations. You are required to tranform these FHIR messages into a more workable format preferably in a tabular format. Include any documentation / commentary you deem necessary.
+# Table of Contents
 
 
-## The Solution
-Your pipeline can use any of the following technologies along with **any frameworks, libraries you feel appropriate**:
+# Architecture
 
-- **Programming Languages** - Java / Python / Scala / Go / C#
-- **Data Storage Layer** - MongoDB / MySql / Postgres / SQLServer Express / Filesystem (CSV/Parquet/Orc)
+## Weights & Biases Setup
 
-You should containerise your pipeline using docker / docker-compose.
+## AWS S3 Setup
 
-## Context
-[FHIR](/https://www.hl7.org/fhir/overview.html) is a popular standard within healthcare used by healthcare systems to exchange data and represent details of paitents in a standardised way. Some sample FHIR data has been generated in the data directory using a tool called [synthea](https://www.hl7.org/fhir/overview.html). 
 
-## Submit your solution	
-Create a public Github repository and push your solution including any documentation you feel necessary. Commit often - we would rather see a history of trial and error than a single monolithic push. When you're finished, please send us the URL to the repository. 
+## Anaconda/miniconda3 Setup
+
+##
+
+
+
+# Improvements
+
+## Pipeline
+
+1. Improve the processing step by making a proper key for accessing json structure
+2. Improve the processing step by extracting the column names from the end of urls for specific tabular format
+3. Few resources types are inactive so create an archived database for the inactive resource types for compliance of the data as required
+4. Add lifecycle policy to the data being uploaded to S3 to optimise cost of cloud storage
+
+## Testing
+
+1. Each component should be tested as required by adding to the following directory: [test_components](/src/test_components)
+2. Create data checks before uploading to database to make sure all the files have been generated properly
+3. Use conftest.yml and pytest to add the data check testing to pipeline
+
+## Cloud Implementation:
+This pipeline can be improved by restructuring it through AWS.
+    1. Create S3 Event Notifications whenever data has been added to a particular prefix
+    2. Connect the S3 Event Notifications as the trigger to a Lambda function consisting of the data processing code & database_upload code
+    3. Let the Lambda function continue with processing each data uploaded & upload to MongoDB database
+    4. Based on the amount of data being added to S3, change to EC2 instance if processing and uploading takes more than 15 minutes
+
+# References
+
+[https://docs.mongodb.com/manual/reference/connection-string/](https://blog.finxter.com/python-how-to-import-modules-from-another-folder/)
+[https://www.psycopg.org/docs/module.html](https://www.psycopg.org/docs/module.html)
+[https://engineeringfordatascience.com/posts/install_miniconda_from_the_command_line/](https://engineeringfordatascience.com/posts/install_miniconda_from_the_command_line/)
+[https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/](https://docs.mongodb.com/manual/reference/method/db.collection.insertMany/)
+[https://www.w3schools.com/python/python_mongodb_insert.asp](https://www.w3schools.com/python/python_mongodb_insert.asp)
