@@ -1,0 +1,6 @@
+root - INFO - Creating the run on Weights & Biases
+root - INFO - Updating the Parameters from input
+root - INFO - Downloading the artifact
+root - INFO - Creating Client for MongoDB using Credentials provided
+root - INFO - Creating Database: FHIR-data
+root - INFO - Extracting content to upload to database

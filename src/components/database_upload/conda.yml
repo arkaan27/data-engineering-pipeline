@@ -10,3 +10,4 @@ dependencies:
       - wandb==0.10.31
       - boto3
       - pymongo
+      - pymongo[srv]

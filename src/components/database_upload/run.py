@@ -7,7 +7,7 @@ import argparse
 
 # Basic Logging
 logging.basicConfig(
-    filename='logs/rds_data_upload.log',
+    filename='logs/mongo_db_data_upload.log',
     level=logging.INFO,
     filemode='w',
     format='%(name)s - %(levelname)s - %(message)s'
@@ -19,11 +19,18 @@ def go(args):
 
     # Creating a run instance
     logger.info("Creating the run on Weights & Biases")
-    run = wandb.init(project="data-engineering", group="dev", job_type="database_upload")
+    run = wandb.init(project="data-engineering",
+                     group="dev",
+                     job_type="database_upload")
 
     # Updating the parameters using arguments input
     logger.info("Updating the Parameters from input")
     run.config.update(args)
+
+    # Adding AWS Credentials to the environment
+
+    os.environ["AWS_ACCESS_KEY_ID"]= args.AWS_ACCESS_KEY_ID
+    os.environ["AWS_SECRET_ACCESS_KEY"] = args.AWS_SECRET_ACCESS_KEY
 
     # Downloading the artifact and logging
     logger.info("Downloading the artifact")
@@ -31,7 +38,10 @@ def go(args):
 
     # Creating a client for Mongo DB
     logger.info("Creating Client for MongoDB using Credentials provided")
-    client = pymongo.MongoClient("mongodb://{}:{}@host:{}/".format(args.MONGO_Username,args.MONGO_Password,27017))
+    client = pymongo.MongoClient("mongodb+srv://{}:{}@{}.ppi15.mongodb.net".format(args.MONGO_Username,
+                                                                                   args.MONGO_Password,
+                                                                                   args.MONGO_Cluster_name,
+                                                                                   args.Database_name))
 
     # Creating database in the client
     logger.info("Creating Database: " + "{}".format(args.Database_name))
@@ -74,7 +84,8 @@ def go(args):
 
     # Referencing the data to the new artifact
     logger.info("Referencing the database to Weights & Biases Artifact")
-    database_uri= "mongodb://username:password@host:{}/{}".format(27017,args.Database_name)
+    database_uri= "mongodb+srv://username:password@{}.ppi15.mongodb.net/{}".format(args.MONGO_Cluster_name,
+                                                                                   args.Database_name)
     artifact.add_reference(database_uri,name= 'database-uri')
 
     # Logging artifact
@@ -83,7 +94,21 @@ def go(args):
 
 
 if __name__ == "__main__":
-    parser = argparse.ArgumentParser(description="Data upload process to S3")
+    parser = argparse.ArgumentParser(description="Uploading Processed data to a MONGO DB Database Cluster")
+
+    parser.add_argument(
+        "--AWS_ACCESS_KEY_ID",
+        type=str,
+        help="Your AWS ACCESS KEY ID TO ACCESS THE BUCKET",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--AWS_SECRET_ACCESS_KEY",
+        type=str,
+        help="Your AWS SECRET ACCESS KEY TO ACCESS THE BUCKET",
+        required=True,
+    )
 
     parser.add_argument(
         "--MONGO_Username",
@@ -96,6 +121,13 @@ if __name__ == "__main__":
         "--MONGO_Password",
         type=str,
         help="Your Mongo password to connect to the Mongo DB",
+        required=True,
+    )
+
+    parser.add_argument(
+        "--MONGO_Cluster_name",
+        type=str,
+        help="Your Mongo DB Cluster name to connect application to the database",
         required=True,
     )
 
