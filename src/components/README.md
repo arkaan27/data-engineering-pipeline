@@ -29,7 +29,7 @@ If it does not then try:
 
     source miniconda3/bin/activate
 
-#Installing environment
+# Installing environment
 
 Navigate to the project folder:
 
@@ -39,7 +39,7 @@ You can create a virtual environment from the following code for this project:
     
     `conda env create -f environment.yaml`
 
-#Activating environment
+# Activating Environment
 
 You need to activate environment before running any particular component
 
@@ -47,6 +47,6 @@ After environment creation, the following code will help you activate environmen
 
     conda activate data_pipeline
 
-# Running components
+# Running Components
 
 Navigate to each components' folder to find instructions for running pipeline/ separate component.
