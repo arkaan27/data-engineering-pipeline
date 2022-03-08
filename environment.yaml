@@ -11,3 +11,5 @@ dependencies:
     - wandb==0.10.31
     - zipp
     - boto3==1.21.12
+    - pymongo
+    - pymongo[srv]
