@@ -9,6 +9,25 @@ You have data arriving every day in your local machine or data is getting upload
 
 Language used: Python
 
+
+# Table of Contents
+* [Problem Statement](#Problem-Statement)
+* [Summary](#Summary)
+* [Scope](#Scope)
+* [Architecture](#Architecture)
+  * [Anaconda/Miniconda3 Setup](#Anaconda/miniconda3-Setup)
+  * [Weights & Biases Setup](#Weights-&-Biases-Setup)
+  * [AWS S3 Setup](#AWS-S3-Setup)
+  * [MongoDB Setup](#MongoDB-Setup)
+* [Tools](#Tools)
+* [Improvements](#Improvements)
+  * [Documentation](#Documentation)
+  * [Architectures](#Architectures)
+  * [Pipeline](#Pipeline)
+  * [Testing](#Testing)
+  * [Cloud Implementation](#Cloud-Implementation)
+* [References](#References)
+
 # Summary
 This pipeline focuses on processing of FHIR data and converting it into a readable format.
 
@@ -48,7 +67,7 @@ The following are the common resource types in FHIR data:
 19. Provenance
 20. SupplyDelivery
 
-After separating into different resource types, this pipeline is able to input those data into MongoDB database.
+After separating into different resource types, this pipeline is able to input separated data into MongoDB database.
 
 The following is not covered in this pipeline:
 
@@ -60,24 +79,6 @@ This pipeline can operate with following limitations:
 Operating Systems: Linux, Windows or Mac
 
 Database Instance: MongoDB
-
-
-# Table of Contents
-* [Problem Statement](#Problem-Statement)
-* [Summary](#Summary)
-* [Scope](#Scope)
-* [Architecture](#Architecture)
-  * [Anaconda/Miniconda3 Setup](#Anaconda/miniconda3-Setup)
-  * [Weights & Biases Setup](#Weights-&-Biases-Setup)
-  * [AWS S3 Setup](#AWS-S3-Setup)
-  * [MongoDB Setup](#MongoDB-Setup)
-* [Improvements](#Improvements)
-  * [Documentation](#Documentation)
-  * [Architectures](#Architectures)
-  * [Pipeline](#Pipeline)
-  * [Testing](#Testing)
-  * [Cloud Implementation](#Cloud-Implementation)
-* [References](#References)
 
 # Architecture
 
@@ -163,9 +164,12 @@ If you already have an account you can Log in from the following link: [Login](h
 
 ## AWS S3 Setup
 
-You will need an AWS S3 bucket to be able to process data through this project
+You will need an AWS S3 bucket to be able to process data through this project.
+
 
 ### Setting up AWS Account
+
+Go to [SignUp](https://portal.aws.amazon.com/billing/signup#/start/email) to get started
 
 1. Create an AWS Root account
 
@@ -272,6 +276,62 @@ replace YOUR-BUCKET with your bucket name that you created
 
 You must create a MongoDB instance to be able to add to the database.
 
+If you don't have an account you can 
+[Sign Up](https://www.mongodb.com/cloud/atlas/register)
+
+If you already have an account then you can [Log in](https://account.mongodb.com/account/login?)
+
+1. Once you have logged in, Click on Build a database
+2. Select the free-shared tier and select the region closest to you that is available in free tier
+3. Change the Cluster Name to something more suitable
+    - Recommended name: FHIR-data, DB-Cluster, db-instance
+    - Change the cluster name in [config.yaml](config.yaml) to the name you use here
+4. Create Username & Password for accessing the database
+   - Update the Username Password in [config.yaml](config.yaml)
+5. Add your current IP to your access list
+6. Finish & close the creation of MongoDB Cluster
+
+
+## Run
+
+1. Activate the conda environment by following the steps [Miniconda3 Setup](#Anaconda/miniconda3-Setup)
+2. If you have dataset that you want to process on your local machine, then you can change the "path" variable in [config.yaml](config.yaml)
+3. If you have data on your local machine & already have data stored on S3 then
+   1. Go to [main.py](main.py)
+   2. Under steps, comment out the data_upload_S3
+4. Navigate to the directory of this project on your local machine:
+   1. Few commands to help you:
+      1. `cd` to change directory or list the current directory
+      2. `ls` to list the files present in your current directory
+      3. `pwd` for linux terminal to list the current directory
+5. Your directory will look like:
+    
+        C://User/Username/data-engineering-pipeline>
+
+6. Run the following code:
+   
+        mlflow run . 
+
+This should run the pipeline
+# Tools
+
+* Windows 10 as operating System 
+* WSL2 -Ubuntu for terminal access
+* PyCharm Community Edition 2021.3 as an IDE
+* Python 3.8.10 for programming the pipeline structure
+* Git 2.30 by Linus Torvalds for version control
+* Git-Hub for cloud-based hosting service, managing Git Repositories
+* Miniconda3 for creating virtual environments
+* Yaml files for simplifying parameters input & creating environments
+* Ml-flow==1.14.1 for running the pipeline
+* Weights & Biases==0.10.31 for data version control and for accessing data
+* Amazon S3 for reliable data storage of FHIR data
+* Hydra-core==1.0.6 for managing parameter inputs & creating config file
+* Jupyter notebook for prototyping any code before writing in modular format and exploring the data
+* boto3==1.21.22 for creating AWS S3 Access
+* Pymongo for accessing the MongoDB cluster
+* Requests module for downloading packages from the internet
+* pip for installing dependencies
 
 # Improvements
 
@@ -284,9 +344,10 @@ This project has number of improvement suggestions and require refactoring of co
 
 ## Architectures
 
-Add Docker implementation - need to learn how to use docker
+Add Docker implementation - I need to learn how to use docker and implement it
 
-Docker implementation will enable deployment of application to any location. Better to use than anaconda.
+Docker implementation will enable deployment of application to any location. It is better to use than anaconda/miniconda3.
+
 Use of ECS & ECK on AWS is also possible through docker.
 
 ## Pipeline

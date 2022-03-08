@@ -14,5 +14,6 @@ Requires:
 
 # Run
 To run this component open up an activated conda environment as instructed in [Instructions](data-engineering-pipeline/blob/master/src/components/README.md)
-`mlflow run . -P AWS_ACCESS_KEY_ID=xxx -P AWS_SECRET_ACCESS_KEY -P ...
-`               
+
+
+                  

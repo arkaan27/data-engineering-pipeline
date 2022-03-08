@@ -14,8 +14,9 @@ import wandb
 import hydra
 from omegaconf import DictConfig
 
+# The Steps this pipeline will run- edit this based on local machine vs S3 storage
 _steps = [
-    "data_upload_S3"
+    "data_upload_S3", # Comment this out if you dont have any data on local machine & already have data present on S3
     "data_upload",
     "data_processing",
     "database_upload"
@@ -25,7 +26,7 @@ _steps = [
 @hydra.main(config_name='config')
 def go(config: DictConfig):
 
-    # Setup the wandb experiment. All runs will be grouped under this name
+    # Set up the wandb experiment. All runs will be grouped under this name
     os.environ["WANDB_PROJECT"] = config["main"]["project_name"]
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
     os.environ["AWS_ACCESS_KEY_ID"]= config["main"]["AWS"]["AWS_ACCESS_KEY_ID"]
@@ -64,7 +65,7 @@ def go(config: DictConfig):
                     "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
                     "bucket_path": "s3://"+config['data_upload_S3']['bucket_name']+"/"+config["data_upload_S3"]["bucket_prefix"],
                     "output_artifact": "raw_data",
-                    "output_type": "data_upload",
+                    "output_type": "data",
                     "output_description": "Artifact for storage of data on Weights & Biases",
                 },
             )

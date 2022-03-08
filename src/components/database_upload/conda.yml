@@ -1,4 +1,4 @@
-name: rds_upload
+name: db_upload
 channels:
   - conda-forge
   - defaults
