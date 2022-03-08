@@ -312,7 +312,7 @@ If you already have an account then you can [Log in](https://account.mongodb.com
    
         mlflow run . 
 
-This should run the pipeline
+This should run the pipelinefine
 # Tools
 
 * Windows 10 as operating System 

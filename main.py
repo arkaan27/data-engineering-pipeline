@@ -16,7 +16,7 @@ from omegaconf import DictConfig
 
 # The Steps this pipeline will run- edit this based on local machine vs S3 storage
 _steps = [
-    "data_upload_S3", # Comment this out if you dont have any data on local machine & already have data present on S3
+    "data_upload_S3", # Comment this line out if you don't have any data on local machine & already have data present on S3
     "data_upload",
     "data_processing",
     "database_upload"
@@ -31,7 +31,6 @@ def go(config: DictConfig):
     os.environ["WANDB_RUN_GROUP"] = config["main"]["experiment_name"]
     os.environ["AWS_ACCESS_KEY_ID"]= config["main"]["AWS"]["AWS_ACCESS_KEY_ID"]
     os.environ["AWS_SECRET_ACCESS_KEY"] = config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"]
-    os.environ["AWS_SESSION_TOKEN"]= config["main"]["AWS"]["AWS_SESSION_TOKEN"]
 
     # Steps to execute
     steps_par = config['main']['steps']
@@ -48,7 +47,7 @@ def go(config: DictConfig):
                 parameters={
                     "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
                     "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
-                    "AWS_DEFAULT_REGION": config["main"]["AWS"]["AWS_DEFAULT_REGION"],
+                    "AWS_DEFAULT_REGION": config["main"]["AWS"]["DEFAULT_REGION_NAME"],
                     "bucket_name": config["data_upload_S3"]["bucket_name"],
                     "bucket_prefix": config["data_upload_S3"]["bucket_prefix"],
                     "dataset_path": config["data_upload_S3"]["path"],
@@ -65,7 +64,7 @@ def go(config: DictConfig):
                     "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
                     "bucket_path": "s3://"+config['data_upload_S3']['bucket_name']+"/"+config["data_upload_S3"]["bucket_prefix"],
                     "output_artifact": "raw_data",
-                    "output_type": "data",
+                    "output_type": "data_upload",
                     "output_description": "Artifact for storage of data on Weights & Biases",
                 },
             )
@@ -77,13 +76,13 @@ def go(config: DictConfig):
                 parameters={
                     "AWS_ACCESS_KEY_ID": config["main"]["AWS"]["AWS_ACCESS_KEY_ID"],
                     "AWS_SECRET_ACCESS_KEY": config["main"]["AWS"]["AWS_SECRET_ACCESS_KEY"],
-                    "AWS_SESSION_TOKEN": config["main"]["AWS"]["AWS_SESSION_TOKEN"],
-                    "AWS_DEFAULT_REGION": config["main"]["AWS"]["AWS_DEFAULT_REGION"],
+                    "AWS_DEFAULT_REGION": config["main"]["AWS"]["DEFAULT_REGION_NAME"],
+                    "bucket_name": config["data_upload_S3"]["bucket_name"],
                     "input_artifact": "raw_data:latest",
                     "output_directory": config["data_processing"]["output_directory"],
                     "output_artifact": "processed_data",
                     "output_type": "processed_data",
-                    "output_description": "Processing the data by seperating json file to different files & uploading processed data to S3",
+                    "output_description": "Processing the data by separating json file to different files & uploading processed data to S3",
                 }
             )
 
@@ -101,7 +100,7 @@ def go(config: DictConfig):
                     "Database_name": config["database_upload"]["Database_name"],
                     "input_artifact": "processed_data:latest",
                     "output_artifact": "database_upload",
-                    "output_type": "database",
+                    "output_type": "database_upload",
                     "output_description": "Uploading the processed data to a MONGO DB database for query purposes"
                 }
             )

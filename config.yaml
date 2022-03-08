@@ -1,19 +1,19 @@
 main:
 
-  project_name: data-engineering-pipeline
-  experiment_name: production
+  project_name: data-engineering
+  experiment_name: development
 
   # AWS Settings
   AWS:
-    AWS_ACCESS_KEY_ID: "Your_Access_Key_Here"
-    AWS_SECRET_ACCESS_KEY: "Your_Secret_Access_key_here"
-    DEFAULT_REGION_NAME: "eu-west-2"
+    AWS_ACCESS_KEY_ID: Your_key_here
+    AWS_SECRET_ACCESS_KEY: Your_secret_access_key
+    DEFAULT_REGION_NAME: eu-west-2
 
   #MONGODB Settings
   MONGODB:
-    MONGO_Username: "Your_Username_here"
-    MONGO_Password: "Your_Password_here"
-    MONGO_Cluster_name: "Your_Cluster_name_here"
+    MONGO_Username: Your_Username
+    MONGO_Password: Your_Password
+    MONGO_Cluster_name: your_cluster_name
 
   steps: all
 
@@ -23,7 +23,7 @@ data_upload_S3:
   path: "D:/data-engineering-pipeline/data"
 
   # The bucket name for the file to be uploaded
-  bucket_name: "YOUR_BUCKET_NAME_HERE"
+  bucket_name: your_bucket_name
 
   # The prefix of the bucket data to be uploaded into-
   #********Don't change this*******

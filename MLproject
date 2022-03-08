@@ -1,5 +1,5 @@
 name: data_pipeline
-conda_env: environment.yml
+conda_env: environment.yaml
 
 entry_points:
   main:
