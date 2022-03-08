@@ -10,6 +10,12 @@ main:
     AWS_SESSION_TOKEN: "Your_Session_Token_Here"
     DEFAULT_REGION_NAME: eu-west-2
 
+  #MONGODB Settings
+  MONGODB:
+    MONGO_Username: "Your_Username_here"
+    MONGO_Password: "Your_Password_here"
+    MONGO_Cluster_name: "Your_Cluster_name_here"
+
   steps: all
 data_upload_S3:
 
@@ -25,3 +31,8 @@ data_upload_S3:
 data_processing:
   # Name of the directory to store the processed data on local machine
   output_directory: "processed_data"
+
+database_upload:
+
+  # Database name
+  Database_name: "FHIR-database"
