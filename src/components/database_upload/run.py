@@ -1,3 +1,20 @@
+"""
+Uploads processed data to Mongo DB database
+
+Requires:
+1. AWS ACCESS KEY ID [str]
+2. AWS SECRET ACCESS KEY [str]
+3. MONGO USERNAME [str]
+4. MONGO PASSWORD [str]
+5. MONGO CLUSTER NAME [str]
+6. DATABASE NAME - Default as FHIR-data [str]
+7. OUTPUT DESCRIPTION- Description of the artifact that is produced from this module
+
+
+Author: Arkaan Quanunga
+Date: 08/03/2022
+"""
+
 import os
 import logging
 import wandb
