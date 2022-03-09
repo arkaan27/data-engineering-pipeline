@@ -10,8 +10,6 @@ Prerequisites:
 
 # Parameters
 
-
-
 You can change the parameters used in this component before running to make the running of the component easier.
 
 Simply navigate to: [MLProject](/src/components/data_processing/MLproject)
@@ -24,10 +22,11 @@ where xxx is your parameter as the input to the component
 
 If you have added the default for few parameters, you will not need to input those parameters when running the script through terminal
 
-**DO NOT CHANGE THE FOLLOWING PARAMETERS:
+**DO NOT CHANGE THE FOLLOWING PARAMETERS:**
 1. input_artifact
 2. output_artifact
-3. output_type**
+3. output_type
+
 
 # Run
 
@@ -45,11 +44,19 @@ If you have added the default for few parameters, you will not need to input tho
     
         mlflow run . -P AWS_ACCESS_KEY_ID=xxx \
                      -P AWS_SECRET_ACCESS_KEY=xxx \
-                     -P AWS_SESSION_TOKEN=xxx \
                      -P AWS_DEFAULT_REGION=xxx \
+                     -P bucket_name=xxx \
                      -P input_artifact=xxx  \
                      -P output_directory=xxx \
                      -P output_artifact=xxx  \
                      -P output_type=xxx  \
                      -P output_description=xxx
 
+Replace xxx with your variables as necessary.
+If you have already changed parameters in [MLProject](MLproject) file of this component
+
+Then just run the following code:
+      
+      mlflow run . -P  output_description=xxx
+
+Where xxx is your output description of the component

@@ -28,6 +28,12 @@ logging.basicConfig(
 
 
 def bucket_exists(s3, bucket_name):
+    """
+
+    :param s3: Client of S3 initialised
+    :param bucket_name: [str] The bucket name
+    :return:
+    """
     # Logging the bucketname for reference
     logging.info("Bucket name: {}".format(bucket_name))
 
@@ -46,6 +52,16 @@ def bucket_exists(s3, bucket_name):
 
 
 def upload_directory(s3, path, bucket_name, prefix):
+    """
+
+    Uploading an entire directory of files to S3
+
+    :param s3: Client of S3 Initialised
+    :param path: [str] The path to the dataset directory to upload
+    :param bucket_name: [str] The bucket name to upload data to
+    :param prefix: [str] The prefix to create when uploading the data
+    :return:
+    """
     # Asserting the path & bucket_name to be string
     try:
         assert isinstance(path, str)
@@ -74,9 +90,16 @@ def upload_directory(s3, path, bucket_name, prefix):
 
 
 def go(args):
+    """
+    Checks if the bucket exists & Uploads data to the bucket
+
+    :param args: The parameters needed to run this function
+    :return:
+    """
     # Defining crucial variables
     os.environ['AWS_ACCESS_KEY_ID']=args.AWS_ACCESS_KEY_ID
     os.environ['AWS_SECRET_ACCESS_KEY']= args.AWS_SECRET_ACCESS_KEY
+
     # Creating S3 Resource From the Session.
     s3 = boto3.resource(
         service_name='s3',
@@ -93,6 +116,7 @@ def go(args):
 
 
 if __name__ == "__main__":
+
     parser = argparse.ArgumentParser(description="Data upload process to S3")
 
     parser.add_argument(
