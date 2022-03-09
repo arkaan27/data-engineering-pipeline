@@ -83,6 +83,13 @@ Database Instance: MongoDB
 # Architecture
 
 
+
+![Architecture](./images/Architecture.drawio(1).png)
+
+# Pipeline
+
+![Pipeline](./images/Pipeline-Structure.drawio(1).png)
+
 ## Anaconda/miniconda3 Setup
 
 You must install anaconda/miniconda3 for creating virtual environments for the project to run.
@@ -312,7 +319,7 @@ If you already have an account then you can [Log in](https://account.mongodb.com
    
         mlflow run . 
 
-This should run the pipelinefine
+This should run the pipeline.
 # Tools
 
 * Windows 10 as operating System 
