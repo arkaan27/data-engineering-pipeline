@@ -1,30 +1,3 @@
 root - INFO - Creating the run on Weights & Biases
-root - INFO - Updating the Parameters from input
 root - INFO - Downloading the artifact
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
-botocore.credentials - INFO - Found credentials in environment variables.
 root - INFO - Creating Client for MongoDB using Credentials provided
-root - INFO - Creating Database: FHIR-db
-root - INFO - Extracting content to upload to database
-root - INFO - SUCCESS: Uploaded all content specified to Collection name
-root - INFO - Creating Output Artifact
-root - INFO - Referencing the database to Weights & Biases Artifact
-root - INFO - Logging the artifact

@@ -18,9 +18,8 @@ Date: 08/03/2022
 import logging
 import wandb
 import argparse
-from src.components.Utils.wandbUtils import *
-from src.components.Utils.MongoDBUtils import *
-
+from Utils.wandbUtils import create_run,create_artifact, log_artifact, add_reference
+from Utils.MongoDBUtils import mongo_initialize, create_db, insert_collections
 
 # Basic Logging
 logging.basicConfig(
@@ -33,16 +32,12 @@ logger = logging.getLogger()
 
 
 def go(args):
-
     # Creating a run instance
     logger.info("Creating the run on Weights & Biases")
-    run = create_run(project_name= "data-engineering",
+    run = create_run(args,
+                     project_name="data-engineering",
                      group="dev",
                      job_type="database_upload")
-
-    # Updating the parameters using arguments input
-    logger.info("Updating the Parameters from input")
-    run.config.update(args)
 
     # Downloading the artifact and logging
     logger.info("Downloading the artifact")
@@ -66,9 +61,9 @@ def go(args):
     artifact = create_artifact(args.output_artifact, args.output_type, args.output_description)
 
     logger.info("Referencing the database to Weights & Biases Artifact")
-    database_uri= "mongodb+srv://username:password@{}.ppi15.mongodb.net/{}".format(args.MONGO_Cluster_name,
-                                                                                   args.Database_name)
-    artifact.add_reference(database_uri,name= 'database-uri')
+    database_uri = "mongodb+srv://username:password@{}.ppi15.mongodb.net/{}".format(args.MONGO_Cluster_name,
+                                                                                    args.Database_name)
+    artifact.add_reference(database_uri, name='database-uri')
 
     # Logging artifact
     logging.info("Logging the artifact")
@@ -77,7 +72,6 @@ def go(args):
 
 if __name__ == "__main__":
     parser = argparse.ArgumentParser(description="Uploading Processed data to a MONGO DB Database Cluster")
-
 
     parser.add_argument(
         "--MONGO_Cluster_name",
@@ -91,6 +85,13 @@ if __name__ == "__main__":
         type=str,
         help="Database name to create/update the records with",
         required=False,
+    )
+
+    parser.add_argument(
+        "--data_download_type",
+        type=str,
+        help="AWS_S3 OR LOCAL",
+        required=True,
     )
 
     parser.add_argument(
@@ -124,10 +125,3 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     go(args)
-
-
-
-
-
-
-

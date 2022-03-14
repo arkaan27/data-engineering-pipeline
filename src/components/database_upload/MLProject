@@ -14,6 +14,12 @@ entry_points:
         type: string
         default: FHIR-data
 
+      # Keep data_download_type the same as data_upload_type in data_processing module
+      data_download_type:
+        description: AWS_S3 OR LOCAL
+        type: string
+        default: LOCAL
+
       input_artifact:
         description: Fully qualified name for the artifact
         type: string
@@ -34,7 +40,8 @@ entry_points:
         type: string
 
     command: >-
-        python run.py --MONGO_Cluster_name {MONGO_Cluster_name} \
+        python run.py --data_download_type {data_download_type} \
+                      --MONGO_Cluster_name {MONGO_Cluster_name} \
                       --Database_name {Database_name} \
                       --input_artifact {input_artifact} \
                       --output_artifact {output_artifact} \
