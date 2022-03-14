@@ -1,9 +1,0 @@
-name: data_upload
-channels:
-  - conda-forge
-  - defaults
-dependencies:
-  - pip=20.3.3
-  - pip:
-      - wandb==0.10.31
-      - boto3==1.21.12

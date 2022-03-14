@@ -1,3 +1,4 @@
-root - INFO - Bucket name: data-engineering-pipeline
+root - INFO - Bucket name: your_bucket_name
+root - ERROR - ERROR: Bucket name does not exist
 root - ERROR - ERROR: File path does not exist!
 root - INFO - SUCCESS: Files Uploaded Successfully

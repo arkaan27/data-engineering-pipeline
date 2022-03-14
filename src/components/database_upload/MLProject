@@ -5,22 +5,6 @@ entry_points:
   main:
     parameters:
 
-      AWS_ACCESS_KEY_ID:
-        description: Your AWS ACCESS KEY ID
-        type: string
-
-      AWS_SECRET_ACCESS_KEY:
-        description: Your AWS SECRET ACCESS KEY
-        type: string
-
-      MONGO_Username:
-        description: Your Mongo DB Username
-        type: string
-
-      MONGO_Password:
-        description: Your Mongo DB password
-        type: string
-
       MONGO_Cluster_name:
         description: Your Cluster name of the Mongo DB database for connection
         type: string
@@ -50,11 +34,7 @@ entry_points:
         type: string
 
     command: >-
-        python run.py --AWS_ACCESS_KEY_ID {AWS_ACCESS_KEY_ID} \
-                      --AWS_SECRET_ACCESS_KEY {AWS_SECRET_ACCESS_KEY} \
-                      --MONGO_Username {MONGO_Username} \
-                      --MONGO_Password {MONGO_Password} \
-                      --MONGO_Cluster_name {MONGO_Cluster_name} \
+        python run.py --MONGO_Cluster_name {MONGO_Cluster_name} \
                       --Database_name {Database_name} \
                       --input_artifact {input_artifact} \
                       --output_artifact {output_artifact} \

@@ -6,7 +6,7 @@ Prerequisites:
 1. Must have AWS account
 2. Create an S3 Bucket
 3. Must run [Data upload S3](/src/components/data_upload_S3) to upload your data present on your local machine to S3
-4. Must run [Data upload WandB](/src/components/data_upload_WandB) to link the S3 bucket & create an artifact for processing
+4. Must run [Data upload WandB](/src/components/data_upload_WandB2) to link the S3 bucket & create an artifact for processing
 
 # Parameters
 
@@ -42,9 +42,7 @@ If you have added the default for few parameters, you will not need to input tho
 
 5. Run the following code:
     
-        mlflow run . -P AWS_ACCESS_KEY_ID=xxx \
-                     -P AWS_SECRET_ACCESS_KEY=xxx \
-                     -P AWS_DEFAULT_REGION=xxx \
+        mlflow run . -P AWS_DEFAULT_REGION=xxx \
                      -P bucket_name=xxx \
                      -P input_artifact=xxx  \
                      -P output_directory=xxx \

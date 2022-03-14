@@ -1,6 +1,0 @@
-root - INFO - Creating the Weights and biases Run
-root - INFO - Updating the parameters of the run
-root - INFO - Creating Artifact
-root - INFO - Adding S3 Bucket as reference
-botocore.credentials - INFO - Found credentials in environment variables.
-root - INFO - Logging the artifact

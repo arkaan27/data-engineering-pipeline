@@ -36,9 +36,7 @@ If you have added the default for few parameters, you will not need to input tho
 
 5. Run the following code:
     
-        mlflow run . -P AWS_ACCESS_KEY_ID=xxx \
-                     -P AWS_SECRET_ACCESS_KEY=xxx \
-                     -P AWS_DEFAULT_REGION=xxx \
+        mlflow run . -P AWS_DEFAULT_REGION=xxx \
                      -P bucket_name=xxx \
                      -P bucket_prefix=xxx  \
                      -P dataset_path=xxx \

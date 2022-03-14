@@ -17,3 +17,20 @@ setup(
         "boto3"
     ]
 )
+
+setup(
+    name="Utils",
+    version=0.1,
+    description="Utilities for the programme to run",
+    zip_safe=False,  # avoid eggs, which make the handling of package data cumbersome
+    packages=["Utils"],
+    classifiers=[
+        "Programming Language :: Python :: 3",
+        "Development Status :: 4 - Beta",
+    ],
+    install_requires=[
+        "mlflow",
+        "wandb",
+        "pymongo"
+    ]
+)

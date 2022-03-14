@@ -1,0 +1,40 @@
+name: uploading_data_1
+conda_env: conda.yml
+
+entry_points:
+  main:
+    parameters:
+      data_location:
+        description: the location of the dataset to be uploaded
+        type: string
+
+      directory_path:
+        description: the path towards the dataset on your local machine
+        type: str
+        default: D:\data-engineering-pipeline\data
+
+      dataset_link:
+        description: the link to your dataset
+        type: uri
+        default: https://github.com/emisgroup/exa-data-eng-assessment/tree/main/data
+
+      output_artifact:
+        description: Name for the W&B artifact that will be created
+        type: string
+        default: raw_data
+
+      output_type:
+        description: Type of the artifact to create
+        type: string
+        default: data_upload
+
+      output_description:
+        description: Description of the Artifact for reference
+        type: string
+
+    command: >-
+        python run.py --data_location {data_location} \
+                      --directory_path {directory_path} \
+                      --output_artifact {output_artifact}  \
+                      --output_type {output_type}  \
+                      --output_description {output_description}

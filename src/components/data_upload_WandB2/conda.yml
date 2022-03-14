@@ -1,0 +1,10 @@
+name: data_upload
+channels:
+  - conda-forge
+  - defaults
+dependencies:
+  - pip=20.3.3
+  - pip:
+      - wandb==0.10.31
+      - boto3==1.21.12
+      - git+https://github.com/arkaan27/data-engineering-pipeline.git#egg=Utils&subdirectory=src/components

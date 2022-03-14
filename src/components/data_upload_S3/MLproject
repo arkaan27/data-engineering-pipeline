@@ -5,14 +5,6 @@ entry_points:
   main:
     parameters:
 
-      AWS_ACCESS_KEY_ID:
-        description: Your AWS Access Key ID
-        type: string
-
-      AWS_SECRET_ACCESS_KEY:
-        description: Your AWS Secret Access Key
-        type: string
-
       AWS_DEFAULT_REGION:
         description: YOUR AWS Default region where the bucket is present
         type: string
@@ -30,9 +22,7 @@ entry_points:
         type: string
 
     command: >-
-        python run.py --AWS_ACCESS_KEY_ID {AWS_ACCESS_KEY_ID} \
-                      --AWS_SECRET_ACCESS_KEY {AWS_SECRET_ACCESS_KEY} \
-                      --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
+        python run.py --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
                       --bucket_name {bucket_name} \
                       --bucket_prefix {bucket_prefix}  \
                       --dataset_path {dataset_path}

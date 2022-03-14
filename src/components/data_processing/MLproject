@@ -47,9 +47,7 @@ entry_points:
 
 
     command: >-
-        python run.py  --AWS_ACCESS_KEY_ID {AWS_ACCESS_KEY_ID} \
-                       --AWS_SECRET_ACCESS_KEY {AWS_SECRET_ACCESS_KEY} \
-                       --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
+        python run.py  --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
                        --bucket_name {bucket_name} \
                        --input_artifact {input_artifact}  \
                        --output_directory {output_directory} \

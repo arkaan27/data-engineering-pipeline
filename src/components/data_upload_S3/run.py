@@ -2,8 +2,8 @@
 Upload data directory to S3 Bucket and creating prefix if it does not exist
 
 Requires:
-1. AWS_ACCESS_KEY_ID
-2. AWS_SECRET_ACCESS_KEY
+1. AWS_ACCESS_KEY_ID - Environment Variable
+2. AWS_SECRET_ACCESS_KEY- Environment Variable
 3. AWS_DEFAULT_REGION
 4. bucket_name
 5. bucket_prefix
@@ -11,6 +11,8 @@ Requires:
 
 Author: Arkaan Quanunga
 Date: 04/03/2022
+
+Update: Added function to initialize client for re-usability based on resource type-
 """
 import os
 import logging
@@ -27,10 +29,28 @@ logging.basicConfig(
 )
 
 
-def bucket_exists(s3, bucket_name):
+def initialize_client(service_name, default_region):
     """
 
-    :param s3: Client of S3 initialised
+    :param service_name:
+    :param default_region:
+    :return:
+    """
+    try:
+        service_client = boto3.resource(service_name=service_name,
+                                        region_name=default_region,
+                                        aws_access_key_id=os.environ["AWS_ACCESS_KEY_ID"],
+                                        aws_secret_access_key=os.environ["AWS_SECRET_ACCESS_KEY"],
+                                        )
+        return service_client
+    except ClientError:
+        logging.info("Unable to connect to the Client")
+
+
+def bucket_exists(resource, bucket_name):
+    """
+
+    :param resource: Resource of S3 initialised
     :param bucket_name: [str] The bucket name
     :return:
     """
@@ -46,17 +66,17 @@ def bucket_exists(s3, bucket_name):
     # Making sure bucket name exists on s3
 
     try:
-        s3.meta.client.head_bucket(Bucket=bucket_name)
+        resource.meta.client.head_bucket(Bucket=bucket_name)
     except ClientError:
         logging.error("ERROR: Bucket name does not exist")
 
 
-def upload_directory(s3, path, bucket_name, prefix):
+def upload_directory(resource, path, bucket_name, prefix):
     """
 
     Uploading an entire directory of files to S3
 
-    :param s3: Client of S3 Initialised
+    :param resource: Client Resource of S3 Initialised
     :param path: [str] The path to the dataset directory to upload
     :param bucket_name: [str] The bucket name to upload data to
     :param prefix: [str] The prefix to create when uploading the data
@@ -83,30 +103,22 @@ def upload_directory(s3, path, bucket_name, prefix):
     try:
         for root, dirs, files in os.walk(path):
             for file in files:
-                s3.meta.client.upload_file(os.path.join(root, file), bucket_name, "{}/{}".format(prefix, file))
+                resource.meta.client.upload_file(os.path.join(root, file), bucket_name, "{}/{}".format(prefix, file))
         logging.info("SUCCESS: Files Uploaded Successfully")
     except:
         logging.error("ERROR: Files could not be uploaded, check s3 bucket")
 
 
-def go(args):
+def run_process(args):
     """
-    Checks if the bucket exists & Uploads data to the bucket
+    Initializes the client, check if bucket exists and uploads to the bucket
 
     :param args: The parameters needed to run this function
     :return:
     """
-    # Defining crucial variables
-    os.environ['AWS_ACCESS_KEY_ID']=args.AWS_ACCESS_KEY_ID
-    os.environ['AWS_SECRET_ACCESS_KEY']= args.AWS_SECRET_ACCESS_KEY
 
-    # Creating S3 Resource From the Session.
-    s3 = boto3.resource(
-        service_name='s3',
-        region_name=args.AWS_DEFAULT_REGION,
-        aws_access_key_id=os.environ['AWS_ACCESS_KEY_ID'],
-        aws_secret_access_key=os.environ['AWS_SECRET_ACCESS_KEY'],
-    )
+    # Initializing session access
+    s3 = initialize_client('s3', args.AWS_DEFAULT_REGION)
 
     # Checking if the bucket exists
     bucket_exists(s3, args.bucket_name)
@@ -116,22 +128,7 @@ def go(args):
 
 
 if __name__ == "__main__":
-
     parser = argparse.ArgumentParser(description="Data upload process to S3")
-
-    parser.add_argument(
-        "--AWS_ACCESS_KEY_ID",
-        type=str,
-        help="Your AWS ACCESS KEY ID for accessing the bucket",
-        required=True,
-    )
-
-    parser.add_argument(
-        "--AWS_SECRET_ACCESS_KEY",
-        type=str,
-        help="Your AWS SECRET ACCESS KEY for accessing the bucket",
-        required=True,
-    )
 
     parser.add_argument(
         "--AWS_DEFAULT_REGION",
@@ -163,4 +160,4 @@ if __name__ == "__main__":
 
     args = parser.parse_args()
 
-    go(args)
+    run_process(args)
