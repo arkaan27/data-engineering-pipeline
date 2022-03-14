@@ -16,7 +16,7 @@ import omegaconf
 _steps = [
     # Comment this line out if you don't have any data on local machine &
     # already have data present on S3
-    "data_upload_S3",
+    # "data_upload_S3",
     "data_upload",
     "data_processing",
     "database_upload"
@@ -69,11 +69,12 @@ def run_pipeline(config: omegaconf.DictConfig):
                     "data_upload_WandB2"),
                 "main",
                 parameters={
-                    "data_location": "AWS_S3",
+                    "data_location": config["data_upload_S3"]["data_location"],
                     "bucket_path": "s3://" +
                     config['data_upload_S3']['bucket_name'] +
                     "/" +
                     config["data_upload_S3"]["bucket_prefix"],
+                    "directory_path": config["data_upload_S3"]["directory_path"],
                     "output_artifact": "raw_data",
                     "output_type": "data_upload",
                     "output_description": "Artifact for storage of data on Weights & Biases",
@@ -91,6 +92,7 @@ def run_pipeline(config: omegaconf.DictConfig):
                 "main",
                 parameters={
                     "AWS_DEFAULT_REGION": config["main"]["AWS"]["DEFAULT_REGION_NAME"],
+                    "data_upload_type": config["data_upload_S3"]["data_upload_type"],
                     "bucket_name": config["data_upload_S3"]["bucket_name"],
                     "input_artifact": "raw_data:latest",
                     "output_directory": config["data_processing"]["output_directory"],
@@ -112,6 +114,7 @@ def run_pipeline(config: omegaconf.DictConfig):
                         "database_upload")),
                 "main",
                 parameters={
+                    "data_download_type": config["data_processing"]["data_upload_type"],
                     "MONGO_Cluster_name": config["main"]["MONGODB"]["MONGO_Cluster_name"],
                     "Database_name": config["database_upload"]["Database_name"],
                     "input_artifact": "processed_data:latest",

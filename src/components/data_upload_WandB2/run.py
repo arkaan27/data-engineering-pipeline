@@ -12,7 +12,6 @@ Author: Arkaan Quanunga
 Date: 04/03/2022
 
 """
-import os
 import logging
 import argparse
 from Utils.wandbUtils import create_run, create_artifact, log_artifact, add_reference

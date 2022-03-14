@@ -1,4 +1,4 @@
-name: data_pipeline
+name: data_pipeline2
 channels:
   - conda-forge
   - defaults
@@ -13,3 +13,4 @@ dependencies:
     - boto3==1.21.12
     - pymongo
     - pymongo[srv]
+    - git+https://github.com/arkaan27/data-engineering-pipeline.git#egg=Utils&subdirectory=src/components

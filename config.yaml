@@ -22,6 +22,12 @@ data_upload_S3:
   # The path towards your dataset to be uploaded
   path: "D:/data-engineering-pipeline/data"
 
+  # Local or AWS_S3
+  data_location: "LOCAL"
+
+  # The directory path to the data
+  directory_path: "/mnt/d/data-engineering-pipeline/data"
+
   # The bucket name for the file to be uploaded
   bucket_name: your_bucket_name
 
@@ -33,7 +39,11 @@ data_processing:
   # Name of the directory to store the processed data on local machine
   output_directory: "processed_data"
 
+  # AWS_S3 OR LOCAL- Whether you want to store the processed data on S3 or keep it local
+  data_upload_type: "LOCAL"
+
 database_upload:
 
   # Database name created on the MongoDB Cluster
   Database_name: "FHIR-db"
+

@@ -1,0 +1,15 @@
+artifact_uri: file:///mnt/d/data-engineering-pipeline/mlruns/0/86dbb00a45b343a594a046251b6abb75/artifacts
+end_time: null
+entry_point_name: ''
+experiment_id: '0'
+lifecycle_stage: active
+name: ''
+run_id: 86dbb00a45b343a594a046251b6abb75
+run_uuid: 86dbb00a45b343a594a046251b6abb75
+source_name: ''
+source_type: 4
+source_version: ''
+start_time: 1647300405248
+status: 1
+tags: []
+user_id: root
