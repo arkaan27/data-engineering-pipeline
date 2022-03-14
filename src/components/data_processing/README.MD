@@ -52,7 +52,9 @@ If you have put data_upload_type as AWS_S3, please add environment variables:
 1. AWS_ACCESS_KEY_ID
 2. AWS_SECRET_ACCESS_KEY
 
-and then add the following line to the running code above:
+if you are unsure how to add the variables to environment variables check: [How to set environment variables](https://www.twilio.com/blog/2017/01/how-to-set-environment-variables.html)
+
+Then add the following line to the end of the running code above:
       
        -P bucket_name= xxx
 
