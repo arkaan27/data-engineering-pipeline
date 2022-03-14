@@ -100,7 +100,7 @@ def upload_directory(resource, path, bucket_name, prefix):
         logging.error("ERROR: File path does not exist!")
 
     # Uploading the files to S3 bucket
-    try:
+    try
         for root, dirs, files in os.walk(path):
             for file in files:
                 resource.meta.client.upload_file(os.path.join(root, file), bucket_name, "{}/{}".format(prefix, file))

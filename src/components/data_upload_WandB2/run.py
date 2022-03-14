@@ -12,10 +12,10 @@ Author: Arkaan Quanunga
 Date: 04/03/2022
 
 """
-
+import os
 import logging
 import argparse
-from src.components.Utils.wandbUtils import *
+from Utils.wandbUtils import create_run, create_artifact, log_artifact, add_reference
 
 # Basic Logging
 logging.basicConfig(
@@ -29,7 +29,7 @@ logging.basicConfig(
 def go(args):
     # Creating a WandB run for automating pipeline
     logging.info("Creating the Weights and biases Run")
-    run = create_run("data_sample",
+    run = create_run(args, project_name="data_sample",
                      group="dev2",
                      job_type="data_upload")
 
@@ -42,12 +42,9 @@ def go(args):
     if args.data_location == "LOCAL":
         logging.info("Uploading dataset to Weights & Biases")
         artifact.add_dir(args.directory_path)
-    # elif args.data_location == "AWS_S3":
-    #     logging.info("Adding S3 Bucket as reference")
-    #     add_reference(artifact, args.bucket_path)
-    # elif args.data_location == "INTERNET":
-    #     logging.info("Getting dataset from the link")
-    #     add_reference(artifact, args.dataset_link)
+    elif args.data_location == "AWS_S3":
+        logging.info("Adding S3 Bucket as reference")
+        add_reference(artifact, args.bucket_path)
 
     # Logging artifact
     logging.info("Logging the artifact")
@@ -60,7 +57,7 @@ if __name__ == "__main__":
     parser.add_argument(
         "--data_location",
         type=str,
-        help="Choose: AWS_S3; LOCAL; INTERNET",
+        help="Choose: AWS_S3; LOCAL",
         required=True,
     )
 
@@ -94,12 +91,6 @@ if __name__ == "__main__":
             "--directory_path",
             type=str,
             help="Local path towards dataset upload data to Weights & Biases",
-            required=False,
-    )
-    parser.add_argument(
-            "--dataset_link",
-            type=str,
-            help="Dataset link on the internet to upload data to Weights & Biases",
             required=False,
     )
 

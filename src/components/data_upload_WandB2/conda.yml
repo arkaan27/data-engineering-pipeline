@@ -4,8 +4,6 @@ channels:
   - defaults
 dependencies:
   - pip=20.3.3
-  - pandas
-  - numpy
   - pip:
       - wandb==0.10.31
       - boto3==1.21.12

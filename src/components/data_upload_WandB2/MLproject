@@ -11,12 +11,12 @@ entry_points:
       directory_path:
         description: the path towards the dataset on your local machine
         type: str
-        default: D:\data-engineering-pipeline\data
+        default: /mnt/d/data-engineering-pipeline/data
 
-      dataset_link:
-        description: the link to your dataset
+      bucket_path:
+        description: the path towards the bucket
         type: uri
-        default: https://github.com/emisgroup/exa-data-eng-assessment/tree/main/data
+        default: s3://data-engineering-pipeline/FHIR-data
 
       output_artifact:
         description: Name for the W&B artifact that will be created
@@ -35,6 +35,7 @@ entry_points:
     command: >-
         python run.py --data_location {data_location} \
                       --directory_path {directory_path} \
+                      --bucket_path {bucket_path} \
                       --output_artifact {output_artifact}  \
                       --output_type {output_type}  \
                       --output_description {output_description}
