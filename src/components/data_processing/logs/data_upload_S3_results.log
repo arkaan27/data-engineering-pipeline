@@ -1,15 +1,8 @@
 root - INFO - Creating the run on Weights & Biases
-root - INFO - Updating the Parameters from input
 root - INFO - Downloading the artifact
 root - INFO - Creating the directory for output files
 root - INFO - Checking if Processing has been completed already
-root - INFO - Creating AWS Session for Accessing S3
-root - INFO - Uploading directory to S3
-root - INFO - Bucket name: data-engineering-pipeline
-root - INFO - SUCCESS: The file path specified exists!
-root - INFO - SUCCESS: Files Uploaded Successfully
-root - INFO - 
+root - INFO - SUCCESS: Processing Files Completed
 root - INFO - Creating Output Artifact
-root - INFO - Referencing the S3 bucket data to Weights & Biases Artifact
-botocore.credentials - INFO - Found credentials in environment variables.
+root - INFO - Uploading the files to the artifact
 root - INFO - Logging the artifact

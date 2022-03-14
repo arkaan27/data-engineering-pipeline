@@ -3,11 +3,8 @@
 This component converts the FHIR data present in the input-artifact to a more readable format based on resource type.
 
 Prerequisites:
-1. Must have AWS account
-2. Create an S3 Bucket
-3. Must run [Data upload S3](/src/components/data_upload_S3) to upload your data present on your local machine to S3
-4. Must run [Data upload WandB](/src/components/data_upload_WandB2) to link the S3 bucket & create an artifact for processing
-
+1. Must run [Data upload WandB](/src/components/data_upload_WandB2) to link the S3 bucket & create an artifact for processing
+2. Can provide AWS Credentials & S3 details if you want to upload data to S3
 # Parameters
 
 You can change the parameters used in this component before running to make the running of the component easier.
@@ -43,12 +40,21 @@ If you have added the default for few parameters, you will not need to input tho
 5. Run the following code:
     
         mlflow run . -P AWS_DEFAULT_REGION=xxx \
-                     -P bucket_name=xxx \
+                     -P data_upload_type==xxx \
                      -P input_artifact=xxx  \
                      -P output_directory=xxx \
                      -P output_artifact=xxx  \
                      -P output_type=xxx  \
                      -P output_description=xxx
+
+If you have put data_upload_type as AWS_S3, please add environment variables:
+
+1. AWS_ACCESS_KEY_ID
+2. AWS_SECRET_ACCESS_KEY
+
+and then add the following line to the running code above:
+      
+       -P bucket_name= xxx
 
 Replace xxx with your variables as necessary.
 If you have already changed parameters in [MLProject](MLproject) file of this component

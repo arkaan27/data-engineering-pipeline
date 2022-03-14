@@ -7,6 +7,7 @@ dependencies:
   - requests
   - mlflow=1.14.1
   - boto3==1.21.12
+  - numpy
   - pip:
       - wandb==0.10.31
       - git+https://github.com/arkaan27/data-engineering-pipeline.git#egg=Utils&subdirectory=src/components

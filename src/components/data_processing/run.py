@@ -58,9 +58,11 @@ def go(args):
 
     logger.info("SUCCESS: Processing Files Completed")
 
-    logger.info("Creating AWS Session for Accessing S3 & uploading data to S3")
-    run_process(args)
-    logger.info("SUCCESS: Uploaded data to S3 successfully")
+    if args.data_upload_type == "AWS_S3":
+        logger.info("Creating AWS Session for Accessing S3 & uploading data to S3")
+        run_process(args)
+        logger.info("SUCCESS: Uploaded data to S3 successfully")
+        
 
     logger.info("Creating Output Artifact")
     artifact = create_artifact(output_artifact=args.output_artifact,
@@ -90,6 +92,13 @@ if __name__ == "__main__":
         help="Your AWS Default Region where the bucket is located",
         required=True,
 
+    )
+
+    parser.add_argument(
+        "--data_upload_type",
+        type=str,
+        help="Choose AWS_S3 or Local",
+        required=True,
     )
 
     parser.add_argument(

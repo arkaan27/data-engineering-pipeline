@@ -15,6 +15,11 @@ entry_points:
         type: string
         default: x
 
+      data_upload_type:
+        description: AWS_S3 or LOCAL
+        type: string
+        default: LOCAL
+
       input_artifact:
         description: Fully qualified name for the artifact
         type: string
@@ -42,6 +47,7 @@ entry_points:
 
     command: >-
         python run.py  --AWS_DEFAULT_REGION {AWS_DEFAULT_REGION} \
+                       --data_upload_type {data_upload_type} \
                        --bucket_name {bucket_name} \
                        --input_artifact {input_artifact}  \
                        --output_directory {output_directory} \
