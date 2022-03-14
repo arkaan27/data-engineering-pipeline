@@ -20,9 +20,9 @@ Date: 04/03/2022
 import os
 import argparse
 import logging
-from src.components.data_upload_S3.run import bucket_exists, upload_directory, initialize_client, run_process
-from src.components.Utils.wandbUtils import create_run, add_reference, create_artifact, log_artifact
-from src.components.Utils.Data_processing_Utils import create_directory,process_files
+from data_upload_S3.run import bucket_exists, upload_directory, initialize_client, run_process
+from Utils.wandbUtils import create_run, add_reference, create_artifact, log_artifact
+from Utils.Data_processing_Utils import create_directory, process_files
 import wandb
 
 # Basic Logging
@@ -39,7 +39,8 @@ logger = logging.getLogger()
 def go(args):
     logger.info("Creating the run on Weights & Biases")
 
-    run = create_run(project_name="data-engineering",
+    run = create_run(args,
+                     project_name="data-engineering",
                      group="dev",
                      job_type="data_processing")
 
@@ -53,7 +54,7 @@ def go(args):
     if len(os.listdir(args.output_directory)) == 0:
         # Looping overall the files in the directory
         logger.info("Processing files...")
-        process_files(args.output_directory,data_dir)
+        process_files(args.output_directory, data_dir)
 
     logger.info("SUCCESS: Processing Files Completed")
 
@@ -67,9 +68,13 @@ def go(args):
                                output_description=args.output_description)
 
     # Referencing the data to the new artifact
-    logger.info("Referencing the S3 bucket data to Weights & Biases Artifact")
-    bucket_path = "s3://" + args.bucket_name + "/" + args.output_directory
-    add_reference(artifact, reference=bucket_path)
+    if args.data_upload_type == "LOCAL":
+        logger.info("Uploading the files to the artifact")
+        artifact.add_dir(args.output_directory)
+    elif args.data_upload_type == "AWS_S3":
+        logger.info("Referencing the S3 bucket data to Weights & Biases Artifact")
+        bucket_path = "s3://" + args.bucket_name + "/" + args.output_directory
+        add_reference(artifact, reference=bucket_path)
 
     # Logging artifact
     logging.info("Logging the artifact")

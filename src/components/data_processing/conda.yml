@@ -9,3 +9,4 @@ dependencies:
   - boto3==1.21.12
   - pip:
       - wandb==0.10.31
+      - git+https://github.com/arkaan27/data-engineering-pipeline.git#egg=Utils&subdirectory=src/components

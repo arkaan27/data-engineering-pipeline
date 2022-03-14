@@ -5,21 +5,15 @@ entry_points:
   main:
     parameters:
 
-      AWS_ACCESS_KEY_ID:
-        description: Your AWS Access Key ID
-        type: string
-
-      AWS_SECRET_ACCESS_KEY:
-        description: Your AWS Secret Access Key
-        type: string
-
       AWS_DEFAULT_REGION:
         description: YOUR AWS Default region where the bucket is present
         type: string
+        default: eu-west-2
 
       bucket_name:
         description: The bucket name to upload data
         type: string
+        default: x
 
       input_artifact:
         description: Fully qualified name for the artifact
