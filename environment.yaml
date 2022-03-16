@@ -1,4 +1,4 @@
-name: data_pipeline2
+name: data_pipeline
 channels:
   - conda-forge
   - defaults

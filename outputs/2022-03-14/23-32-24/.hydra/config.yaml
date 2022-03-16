@@ -1,0 +1,23 @@
+main:
+  project_name: data-engineering
+  experiment_name: development
+  AWS:
+    AWS_ACCESS_KEY_ID: Your_key_here
+    AWS_SECRET_ACCESS_KEY: Your_secret_access_key
+    DEFAULT_REGION_NAME: eu-west-2
+  MONGODB:
+    MONGO_Username: Your_Username
+    MONGO_Password: Your_Password
+    MONGO_Cluster_name: your_cluster_name
+  steps: all
+data_upload_S3:
+  path: D:/data-engineering-pipeline/data
+  data_location: LOCAL
+  directory_path: /mnt/d/data-engineering-pipeline/data
+  bucket_name: your_bucket_name
+  bucket_prefix: FHIR-data
+data_processing:
+  output_directory: processed_data
+  data_upload_type: LOCAL
+database_upload:
+  Database_name: FHIR-db

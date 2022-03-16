@@ -20,10 +20,10 @@ Date: 04/03/2022
 import os
 import argparse
 import logging
+import wandb
 from data_upload_S3.run import bucket_exists, upload_directory, initialize_client, run_process
 from Utils.wandbUtils import create_run, add_reference, create_artifact, log_artifact
 from Utils.Data_processing_Utils import create_directory, process_files
-import wandb
 
 # Basic Logging
 
